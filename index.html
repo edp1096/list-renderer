@@ -60,9 +60,9 @@
                                     if (!isInsert) { break }
                                 }
 
-                                let tplVarValue = arrayName[j][tplVarName]
-                                // if (tplVarValue == undefined) { tplVarValue = "" }
-                                // innerData = innerData.replace(match, tplVarValue)
+                                // let tplVarValue = arrayName[j][tplVarName]
+                                if (tplVarValue == undefined) { tplVarValue = "" }
+                                innerData = innerData.replace(match, tplVarValue)
                                 if (tplVarValue != undefined) { innerData = innerData.replace(match, tplVarValue) }
                             }
 
