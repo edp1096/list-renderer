@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>List rendering class</title>
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div lr-loop="human">
+        <p>{{name}} / {{age}}</p>
+    </div>
+    <div lr-loop="animal">
+        <p>{{name}} / {{age}}</p>
+    </div>
+</body>
+
+<script>
+    class ListRenderer {
+        findAndSetList(el) {
+            const c = el.children
+            for (const i in c) {
+                if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
+                    const vals = eval(c[i].getAttribute("lr-loop"))
+                    if (vals != undefined) {
+                        const template = c[i].innerHTML
+                        c[i].innerHTML = ""
+
+                        const regex = /{{(.*?)}}/g
+                        const matches = template.match(regex)
+
+                        for (const j in vals) {
+                            let innerData = template
+
+                            for (const k in matches) {
+                                const match = matches[k]
+                                const tplVarName = match.replace(regex, "$1")
+
+                                let tplVarValue = vals[j][tplVarName]
+                                // if (tplVarValue == undefined) { tplVarValue = "" }
+                                // innerData = innerData.replace(match, tplVarValue)
+                                if (tplVarValue != undefined) { innerData = innerData.replace(match, tplVarValue) }
+                            }
+
+                            c[i].innerHTML += innerData
+                        }
+                    }
+                }
+            }
+        }
+
+        render() {
+            const root = document.getElementsByTagName("body")[0]
+            this.findAndSetList(root)
+        }
+    }
+
+    const human = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 20 },
+        { name: "Joe", age: 40 },
+    ]
+    const animal = [
+        { name: "Dog", age: 10 },
+        { name: "Cat", age: 5 },
+        { name: "Bird", age: 2 },
+    ]
+
+    const lr = new ListRenderer(human)
+    lr.render()
+</script>
+
+</html>
