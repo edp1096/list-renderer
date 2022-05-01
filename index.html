@@ -14,15 +14,19 @@
 
 <body>
     <div lr-loop="human">
-        <p>{{name}} / {{age}}</p>
+        <p><span>{{name}}</span> / {{age}}</p>
     </div>
     <div lr-loop="animal">
-        <p>{{name}} / {{age}}</p>
+        <p lr-if="age > 2">{{name}} / {{age}}</p>
     </div>
 </body>
 
 <script>
     class ListRenderer {
+        constructor() {
+            this.template = {}
+        }
+
         evaluateString(cmd) {
             return new Function("'use strict'; return (" + cmd + ")")()
         }
@@ -31,29 +35,40 @@
             const c = el.children
             for (const i in c) {
                 if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
-                    const vals = this.evaluateString(c[i].getAttribute("lr-loop"))
+                    const arrayName = this.evaluateString(c[i].getAttribute("lr-loop"))
 
-                    if (vals != undefined) {
-                        const template = c[i].innerHTML
+                    if (arrayName != undefined) {
+                        const template = c[i].innerHTML.trim()
+                        this.template[arrayName] = c[i].innerHTML.trim()
+
+                        const cond = c[i].children[0].getAttribute("lr-if")
                         c[i].innerHTML = ""
 
                         const regex = /{{(.*?)}}/g
                         const matches = template.match(regex)
 
-                        for (const j in vals) {
+                        for (const j in arrayName) {
+                            let isInsert = true
                             let innerData = template
 
                             for (const k in matches) {
                                 const match = matches[k]
                                 const tplVarName = match.replace(regex, "$1")
 
-                                let tplVarValue = vals[j][tplVarName]
+                                if ((cond != null) && (cond.indexOf(tplVarName) != -1)) {
+                                    let condition = cond
+                                    condition = condition.replace(tplVarName, arrayName[j][tplVarName])
+                                    isInsert = this.evaluateString(condition)
+                                    if (!isInsert) { break }
+                                }
+
+                                let tplVarValue = arrayName[j][tplVarName]
                                 // if (tplVarValue == undefined) { tplVarValue = "" }
                                 // innerData = innerData.replace(match, tplVarValue)
                                 if (tplVarValue != undefined) { innerData = innerData.replace(match, tplVarValue) }
                             }
 
-                            c[i].innerHTML += innerData
+                            if (isInsert) { c[i].innerHTML += innerData }
                         }
                     }
                 }
