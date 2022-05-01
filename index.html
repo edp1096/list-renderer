@@ -17,7 +17,7 @@
         <p><span>{{name}}</span> / {{age}}</p>
     </div>
     <div lr-loop="animal">
-        <p lr-if="age > 2">{{name}} / {{age}}</p>
+        <p lr-if="age < 10">{{name}} / {{age}}</p>
     </div>
 </body>
 
@@ -27,9 +27,7 @@
             this.template = {}
         }
 
-        evaluateString(cmd) {
-            return new Function("'use strict'; return (" + cmd + ")")()
-        }
+        evaluateString(cmd) { return new Function("'use strict'; return (" + cmd + ")")() }
 
         findAndSetList(el) {
             const c = el.children
@@ -57,7 +55,7 @@
 
                                 if ((cond != null) && (cond.indexOf(tplVarName) != -1)) {
                                     let condition = cond
-                                    condition = condition.replace(tplVarName, arrayName[j][tplVarName])
+                                    condition = condition.replace(tplVarName, "'" + arrayName[j][tplVarName] + "'")
                                     isInsert = this.evaluateString(condition)
                                     if (!isInsert) { break }
                                 }
@@ -92,7 +90,7 @@
         { name: "Bird", age: 2 },
     ]
 
-    const lr = new ListRenderer(human)
+    const lr = new ListRenderer()
     lr.render()
 </script>
 
