@@ -24,7 +24,7 @@
 <script>
     class ListRenderer {
         evaluateString(cmd) {
-            return Function("'use strict'; return (" + cmd + ")")()
+            return new Function("'use strict'; return (" + cmd + ")")()
         }
 
         findAndSetList(el) {
