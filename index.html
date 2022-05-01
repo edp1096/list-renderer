@@ -22,12 +22,15 @@
 </body>
 
 <script>
+    function evaluateString(cmd) { return Function("'use strict'; return (" + cmd + ")")() }
+
     class ListRenderer {
         findAndSetList(el) {
             const c = el.children
             for (const i in c) {
                 if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
-                    const vals = eval(c[i].getAttribute("lr-loop"))
+                    const vals = evaluateString(c[i].getAttribute("lr-loop"))
+
                     if (vals != undefined) {
                         const template = c[i].innerHTML
                         c[i].innerHTML = ""
