@@ -60,7 +60,7 @@
                                     if (!isInsert) { break }
                                 }
 
-                                // let tplVarValue = arrayName[j][tplVarName]
+                                let tplVarValue = arrayName[j][tplVarName]
                                 if (tplVarValue == undefined) { tplVarValue = "" }
                                 innerData = innerData.replace(match, tplVarValue)
                                 if (tplVarValue != undefined) { innerData = innerData.replace(match, tplVarValue) }
@@ -82,7 +82,7 @@
     const human = [
         { name: "John", age: 30 },
         { name: "Jane", age: 20 },
-        { name: "Joe", age: 40 },
+        { name: "Joe" },
     ]
     const animal = [
         { name: "Dog", age: 10 },
