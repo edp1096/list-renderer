@@ -34,6 +34,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
         { name: "Sam", age: 10 },
         { name: "Sally", age: 5 }
     ]
+
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()
 </script>
@@ -64,6 +65,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
         { name: "Tiger", age: 5 },
         { name: "Elephant", age: 2 },
     ]
+
     const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
     lrAnimal.render()
 </script>
@@ -91,6 +93,40 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
         { name: "Sam", age: 10 },
         { name: "Sally", age: 5 }
     ]
+
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+</script>
+```
+
+### reload
+```html
+<button onclick="addHumanData()">Add human data</button>
+
+<div id="human-container">
+    <div lr-loop="human">
+        <p><span>{{name}}</span> / {{age}}</p>
+    </div>
+</div>
+
+<script src="list-renderer.js"></script>
+<script>
+    function addHumanData() {
+        human.push({ name: "Mark", age: "15" })
+        human.push({ name: "Richard", age: "25" })
+        human.push({ name: "Robert", age: "35" })
+
+        lrHuman.reload()
+    }
+
+    const human = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 20 },
+        { name: "Joe" },
+        { name: "Sam", age: 10 },
+        { name: "Sally", age: 5 }
+    ]
+
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()
 </script>
