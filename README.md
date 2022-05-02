@@ -74,7 +74,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 ### lr-click
 * Same as `onclick` event
 * Can be placed in template
-* Variable usage is not supported, only `$index` can be used
+* Variable of loop object is not supported, just `$index` can be used
 ```html
 <div id="human-container">
     <div lr-loop="human">
