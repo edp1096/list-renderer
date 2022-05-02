@@ -13,8 +13,9 @@
 </head>
 
 <body>
-    <button onclick="addData()">Add human data</button>
-    
+    <button onclick="addHumanData()">Add human data</button>
+    <button onclick="addAnimalData()">Add animal data</button>
+
     <div id="human-container">
         <div lr-loop="human">
             <p><span>{{name}}</span> / {{age}}</p>
@@ -117,12 +118,20 @@
         }
     }
 
-    function addData() {
+    function addHumanData() {
         human.push({ name: "Mark", age: "15" })
         human.push({ name: "Richard", age: "25" })
         human.push({ name: "Robert", age: "35" })
 
         lrHuman.reload()
+    }
+
+    function addAnimalData() {
+        animal.push({ name: "Zebra", age: "5" })
+        animal.push({ name: "Shark", age: "25" })
+        animal.push({ name: "Whale", age: "8" })
+
+        lrAnimal.reload()
     }
 
     const human = [
