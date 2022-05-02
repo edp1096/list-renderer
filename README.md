@@ -22,10 +22,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     </div>
 </div>
 
-<!-- Define ListRenderer class -->
-<!-- skip.. -->
-<!-- Define ListRenderer class -->
-
+<script src="list-renderer.js"></script>
 <script>
     const human = [
         { name: "John", age: 30 },
@@ -54,10 +51,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     </div>
 </div>
 
-<!-- Define ListRenderer class -->
-<!-- skip.. -->
-<!-- Define ListRenderer class -->
-
+<script src="list-renderer.js"></script>
 <script>
     const animal = [
         { name: "Dog", age: 10 },
