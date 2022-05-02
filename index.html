@@ -13,85 +13,137 @@
 </head>
 
 <body>
-    <div lr-loop="human">
-        <p><span>{{name}}</span> / {{age}}</p>
+    <button onclick="addData()">Add human data</button>
+    <div id="human-container">
+        <div lr-loop="human">
+            <p><span>{{name}}</span> / {{age}}</p>
+        </div>
     </div>
-    <div lr-loop="animal">
-        <p lr-if="age < 10">{{name}} / {{age}}</p>
+    <div id="animal-container">
+        <div lr-loop="animal">
+            <div lr-if="age > 5">
+                <p>{{name}} / {{age}}</p>
+            </div>
+            <div lr-if="name == 'Bird'">
+                <p>{{name}} / {{age}}</p>
+            </div>
+        </div>
     </div>
 </body>
 
 <script>
     class ListRenderer {
-        constructor() {
-            this.template = {}
+        constructor(root) {
+            this.root = root
+            this.template = ""
+            this.templates = new Array()
         }
 
         evaluateString(cmd) { return new Function("'use strict'; return (" + cmd + ")")() }
 
-        findAndSetList(el) {
-            const c = el.children
+        findAndSetList() {
+            this.templates = new Array()
+
+            const conds = new Array()
+            const variableMatchesList = new Array()
+            const c = this.root.children
+            const regexForVariables = /{{(.*?)}}/g
+
             for (const i in c) {
                 if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
-                    const arrayName = this.evaluateString(c[i].getAttribute("lr-loop"))
+                    const arrayName = c[i].getAttribute("lr-loop")
+                    const arrayData = this.evaluateString(arrayName)
 
                     if (arrayName != undefined) {
-                        const template = c[i].innerHTML.trim()
-                        this.template[arrayName] = c[i].innerHTML.trim()
+                        this.template = c[i].outerHTML.trim()
 
-                        const cond = c[i].children[0].getAttribute("lr-if")
+                        for (const j in c[i].children) {
+                            const tpl = c[i].children[j]
+                            if (tpl.outerHTML != undefined) {
+                                conds.push(tpl.getAttribute("lr-if"))
+                                tpl.removeAttribute("lr-if")
+                                this.templates.push(tpl.outerHTML.trim())
+                                variableMatchesList.push(this.templates[this.templates.length - 1].match(regexForVariables))
+                            }
+                        }
+
                         c[i].innerHTML = ""
 
-                        const regex = /{{(.*?)}}/g
-                        const matches = template.match(regex)
+                        for (const j in arrayData) {
 
-                        for (const j in arrayName) {
-                            let isInsert = true
-                            let innerData = template
+                            for (const k in this.templates) {
+                                let isInsert = true
+                                let dataChanged = this.templates[k]
+                                const variableMatches = variableMatchesList[k]
 
-                            for (const k in matches) {
-                                const match = matches[k]
-                                const tplVarName = match.replace(regex, "$1")
+                                for (const l in variableMatches) {
+                                    const variableMatch = variableMatches[l]
+                                    const tplVarName = variableMatch.replace(regexForVariables, "$1")
 
-                                if ((cond != null) && (cond.indexOf(tplVarName) != -1)) {
-                                    let condition = cond
-                                    condition = condition.replace(tplVarName, "'" + arrayName[j][tplVarName] + "'")
-                                    isInsert = this.evaluateString(condition)
-                                    if (!isInsert) { break }
+                                    if ((conds[k] != null) && (conds[k].indexOf(tplVarName) != -1)) {
+                                        const condition = conds[k].replace(tplVarName, "'" + arrayData[j][tplVarName] + "'")
+                                        isInsert = this.evaluateString(condition)
+                                    }
+
+                                    if (!isInsert) {
+                                        dataChanged = ""
+                                        break
+                                    }
+
+                                    let tplVarValue = arrayData[j][tplVarName]
+                                    if (tplVarValue == undefined) { tplVarValue = "" }
+                                    dataChanged = dataChanged.replace(variableMatch, tplVarValue)
+                                    if (tplVarValue != undefined) { dataChanged = dataChanged.replace(variableMatch, tplVarValue) }
                                 }
 
-                                let tplVarValue = arrayName[j][tplVarName]
-                                if (tplVarValue == undefined) { tplVarValue = "" }
-                                innerData = innerData.replace(match, tplVarValue)
-                                if (tplVarValue != undefined) { innerData = innerData.replace(match, tplVarValue) }
+                                c[i].innerHTML += dataChanged
                             }
 
-                            if (isInsert) { c[i].innerHTML += innerData }
                         }
                     }
                 }
             }
         }
 
-        render() {
-            const root = document.getElementsByTagName("body")[0]
-            this.findAndSetList(root)
+        render() { this.findAndSetList() }
+
+        restoreToTemplate() { this.root.innerHTML = this.template }
+
+        reload() {
+            this.restoreToTemplate()
+            this.render()
         }
+    }
+
+    function addData() {
+        human.push({ name: "Mark", age: "15" })
+        human.push({ name: "Richard", age: "25" })
+        human.push({ name: "Robert", age: "35" })
+
+        lrHuman.reload()
     }
 
     const human = [
         { name: "John", age: 30 },
         { name: "Jane", age: 20 },
         { name: "Joe" },
+        { name: "Sam", age: 10 },
+        { name: "Sally", age: 5 }
     ]
     const animal = [
         { name: "Dog", age: 10 },
         { name: "Cat", age: 5 },
         { name: "Bird", age: 2 },
+        { name: "Lion", age: 10 },
+        { name: "Tiger", age: 5 },
+        { name: "Elephant", age: 2 },
     ]
 
-    const lr = new ListRenderer()
-    lr.render()
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+
+    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
+    lrAnimal.render()
 </script>
 
 </html>
