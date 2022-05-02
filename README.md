@@ -68,3 +68,30 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     lrAnimal.render()
 </script>
 ```
+
+### lr-click
+* Same as `onclick` event
+* Can be placed in template
+* Variable usage is not supported, only `$index` can be used
+```html
+<div id="human-container">
+    <div lr-loop="human">
+        <p><span>{{name}}</span> / {{age}} <button lr-click="showIndex($index)">Show index</button></p>
+    </div>
+</div>
+
+<script src="list-renderer.js"></script>
+<script>
+    function showIndex(index) { alert(index) }
+
+    const human = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 20 },
+        { name: "Joe" },
+        { name: "Sam", age: 10 },
+        { name: "Sally", age: 5 }
+    ]
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+</script>
+```
