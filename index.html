@@ -18,7 +18,7 @@
 
     <div id="human-container">
         <div lr-loop="human">
-            <p><span>{{name}}</span> / {{age}}</p>
+            <p><span>{{name}}</span> / {{age}} <button lr-click="showIndex($index)">Show index</button></p>
         </div>
     </div>
 
@@ -52,6 +52,8 @@
 
         lrAnimal.reload()
     }
+
+    function showIndex(index) { alert(index) }
 
     const human = [
         { name: "John", age: 30 },

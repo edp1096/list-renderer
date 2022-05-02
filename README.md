@@ -1,6 +1,6 @@
-# List renderer class
+# List renderer
 
-Very much limitful list renderer for my personal usage
+Very much limitful list renderer class for my personal usage purpose
 
 See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](https://github.com/edp1096/list-renderer/blob/main/index.html)
 
@@ -9,6 +9,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 
 * Only an 1 depth list renderer in container
 * Also only 1 depth(s) if in list
+* Support only `lr-click` and `$index` as event
 
 ## Usage
 
@@ -66,3 +67,6 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 </script>
 ```
 
+## Todo
+
+* [] Click event
