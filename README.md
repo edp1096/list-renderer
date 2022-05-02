@@ -10,7 +10,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 ## Limitation
 
 * Only an 1 depth list renderer in container
-* Also only 1 depth(s) if in list
+* Also only 1 depth(s) `lr-if` in list
 * Support only `lr-click` and `$index` as event
 
 ## Usage
