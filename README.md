@@ -2,7 +2,7 @@
 
 Very much limitful list renderer for my personal usage
 
-See [`deployed page`](https://edp1096.github.io/list-renderer) and see [index.html](https://github.com/edp1096/list-renderer/blob/main/index.html)
+See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](https://github.com/edp1096/list-renderer/blob/main/index.html)
 
 
 ## Limitation
