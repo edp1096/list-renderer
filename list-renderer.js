@@ -2,8 +2,7 @@ class ListRenderer {
     constructor(root) {
         this.root = root
         this.template = ""
-        this.templates = new Array()
-        this.lrEvents = new Array()
+        this.dataForDisplay = new Array()
     }
 
     evaluateString(cmd) { return new Function("'use strict'; return (" + cmd + ")")() }
@@ -30,7 +29,7 @@ class ListRenderer {
     }
 
     findAndSetList() {
-        this.templates = new Array()
+        this.dataForDisplay = new Array()
 
         const conds = new Array()
         const events = new Array()
@@ -54,8 +53,8 @@ class ListRenderer {
                             conds.push(tpl.getAttribute("lr-if"))
 
                             tpl.removeAttribute("lr-if")
-                            this.templates.push(tpl.outerHTML.trim())
-                            variableMatchesList.push(this.templates[this.templates.length - 1].match(regexForVariables))
+                            this.dataForDisplay.push(tpl.outerHTML.trim())
+                            variableMatchesList.push(this.dataForDisplay[this.dataForDisplay.length - 1].match(regexForVariables))
                         }
                     }
 
@@ -71,9 +70,9 @@ class ListRenderer {
                             lrCLKsChange.push(lrCLKChange)
                         }
 
-                        for (const k in this.templates) {
+                        for (const k in this.dataForDisplay) {
                             let isInsert = true
-                            let dataChanged = this.templates[k]
+                            let dataChanged = this.dataForDisplay[k]
 
                             for (const l in lrCLKsChange) {
                                 const lrCLKChange = lrCLKsChange[l]
