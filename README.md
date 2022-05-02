@@ -2,6 +2,8 @@
 
 Very much limitful list renderer class for my personal usage purpose
 
+If one of vue, react, angular is too huge or not fit, try [`knockout.js`](https://github.com/knockout/knockout)
+
 See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](https://github.com/edp1096/list-renderer/blob/main/index.html)
 
 
@@ -66,7 +68,3 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     lrAnimal.render()
 </script>
 ```
-
-## Todo
-
-* [] Click event
