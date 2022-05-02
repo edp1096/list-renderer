@@ -14,11 +14,13 @@
 
 <body>
     <button onclick="addData()">Add human data</button>
+    
     <div id="human-container">
         <div lr-loop="human">
             <p><span>{{name}}</span> / {{age}}</p>
         </div>
     </div>
+
     <div id="animal-container">
         <div lr-loop="animal">
             <div lr-if="age > 5">
