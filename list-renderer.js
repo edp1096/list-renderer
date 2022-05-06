@@ -1,4 +1,4 @@
-class ListRenderer {
+export default class ListRenderer {
     constructor(root) {
         this.root = root
         this.template = ""

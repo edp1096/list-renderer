@@ -39,10 +39,21 @@
     </div>
 </body>
 
-<script src="list-renderer.js"></script>
-<script>
+<!-- <script src="list-renderer.js"></script> -->
+<script type="module">
+    import ListRenderer from './list-renderer.js';
 
-    function addHumanData() {
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+
+    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
+    lrAnimal.render()
+
+    window.lrAnimal = lrAnimal
+    window.lrHuman = lrHuman
+</script>
+<script>
+    async function addHumanData() {
         human.push({ name: "Mark", age: "15" })
         human.push({ name: "Richard", age: "25" })
         human.push({ name: "Robert", age: "35" })
@@ -50,7 +61,7 @@
         lrHuman.reload()
     }
 
-    function addAnimalData() {
+    async function addAnimalData() {
         animal.push({ name: "Zebra", age: "5" })
         animal.push({ name: "Shark", age: "25" })
         animal.push({ name: "Whale", age: "8" })
@@ -75,12 +86,6 @@
         { name: "Tiger", age: 5 },
         { name: "Elephant", age: 2 }
     ]
-
-    const lrHuman = new ListRenderer(document.getElementById("human-container"))
-    lrHuman.render()
-
-    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
-    lrAnimal.render()
 </script>
 
 </html>
