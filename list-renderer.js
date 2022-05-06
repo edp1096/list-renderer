@@ -22,6 +22,7 @@ class ListRenderer {
                 result = result.concat(lrCLKs)
 
                 // Because js do shallow copy so, not need to return changed attributes of elements
+                // structuredClone cannot be used because HTMLCollection object could not be cloned
                 el.setAttribute("onclick", lrCLKs)
                 el.removeAttribute("lr-click")
             }
