@@ -20,6 +20,8 @@ class ListRenderer {
             lrCLKs = el.getAttribute("lr-click")
             if (lrCLKs != undefined && lrCLKs != null) {
                 result = result.concat(lrCLKs)
+
+                // Because js do shallow copy so, not need to return changed attributes of elements
                 el.setAttribute("onclick", lrCLKs)
                 el.removeAttribute("lr-click")
             }
