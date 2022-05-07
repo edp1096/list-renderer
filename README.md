@@ -13,7 +13,73 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 * Also only 1 depth(s) `lr-if` in list
 * Support only `lr-click` and `$index` as event
 
-## Usage
+## Build
+
+* Typescript
+
+```powershell
+$ yarn install
+$ yarn build
+```
+
+* Javascript - nothing
+
+## Load
+
+### Javascript
+
+```html
+<div id="human-container">
+    <div lr-loop="human">
+        <p><span>{{name}}</span> / {{age}}</p>
+    </div>
+</div>
+
+<script src="js/list-renderer.js"></script>
+<script>
+    const human = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 20 }
+    ]
+
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+</script>
+```
+
+### Typescript
+
+```html
+<div id="human-container">
+    <div lr-loop="human">
+        <p><span>{{name}}</span> / {{age}}</p>
+    </div>
+</div>
+
+<script type="module">
+    import ListRenderer from './dist/list-renderer.js';
+
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+
+    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
+    lrAnimal.render()
+
+    window.lrAnimal = lrAnimal
+    window.lrHuman = lrHuman
+</script>
+<script>
+    const human = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 20 }
+    ]
+
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+</script>
+```
+
+## Directives
 
 ### lr-loop
 * `lr-loop` should be placed only 1 depth under container
@@ -25,7 +91,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     </div>
 </div>
 
-<script src="list-renderer.js"></script>
+<script src="js/list-renderer.js"></script>
 <script>
     const human = [
         { name: "John", age: 30 },
@@ -55,7 +121,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     </div>
 </div>
 
-<script src="list-renderer.js"></script>
+<script src="js/list-renderer.js"></script>
 <script>
     const animal = [
         { name: "Dog", age: 10 },
@@ -82,7 +148,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     </div>
 </div>
 
-<script src="list-renderer.js"></script>
+<script src="js/list-renderer.js"></script>
 <script>
     function showIndex(index) { alert(index) }
 
@@ -109,7 +175,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     </div>
 </div>
 
-<script src="list-renderer.js"></script>
+<script src="js/list-renderer.js"></script>
 <script>
     function addHumanData() {
         human.push({ name: "Mark", age: "15" })
