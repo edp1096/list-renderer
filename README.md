@@ -15,14 +15,14 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 
 ## Build
 
-* Typescript
+* Typescript - Require [esbuild](https://github.com/evanw/esbuild)
 
 ```powershell
 $ yarn install
 $ yarn build
 ```
 
-* Javascript - nothing
+* Javascript - nothing, just load it
 
 ## Load
 

@@ -17,9 +17,7 @@
     <button type=button onclick="addHumanData()">Add human data</button>
     <button type=button onclick="addAnimalData()">Add animal data</button>
 
-    <div>
-        Name / Age / Button to show index
-    </div>
+    <div>Name / Age / Button to show index</div>
 
     <div id="human-container">
         <div lr-loop="human">
@@ -39,12 +37,9 @@
     </div>
 </body>
 
-<!-- <script src="list-renderer.js"></script> -->
+<!-- <script src="js/list-renderer.js"></script> -->
 <script type="module">
-    // https://stackoverflow.com/questions/64665485/can-i-mix-in-javascript-modules-with-regular-javascript
-    // https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
-
-    import ListRenderer from './dist/list-renderer.js';
+    import ListRenderer from './dist/list-renderer.js'
 
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()
@@ -56,6 +51,7 @@
     window.lrHuman = lrHuman
 </script>
 <script>
+
     async function addHumanData() {
         human.push({ name: "Mark", age: "15" })
         human.push({ name: "Richard", age: "25" })
@@ -89,6 +85,12 @@
         { name: "Tiger", age: 5 },
         { name: "Elephant", age: 2 }
     ]
+
+    // Uncomment below when using js/list-renderer.js
+    // const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    // lrHuman.render()
+    // const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
+    // lrAnimal.render()
 </script>
 
 </html>

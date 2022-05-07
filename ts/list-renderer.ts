@@ -125,4 +125,4 @@ class ListRenderer {
     }
 }
 
-export { ListRenderer }
+export default ListRenderer

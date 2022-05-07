@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "prestart": "tsc-watch",
-    "dry": "yarn build | node dist/main.js",
     "build": "node esbuild.build.js",
     "watch": "node esbuild.watch.js"
   },
