@@ -1,6 +1,6 @@
 # List renderer
 
-Very much limitful list renderer class for my personal usage purpose
+Very much limitful list renderer class for the purpose of my personal usage
 
 If one of vue, react, angular is too huge or not fit, try [`knockout.js`](https://github.com/knockout/knockout), not this :)
 
