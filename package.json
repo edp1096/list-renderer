@@ -2,11 +2,10 @@
   "name": "hello-esbuild",
   "version": "1.0.0",
   "license": "WTFPL",
-  "type": "module",
   "scripts": {
     "prestart": "tsc-watch",
     "build": "node esbuild.build.js",
-    "watch": "node esbuild.watch.js"
+    "serve": "node esbuild.serve.js"
   },
   "devDependencies": {
     "esbuild": "^0.14.38",
