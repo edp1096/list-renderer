@@ -57,7 +57,7 @@ $ yarn build
 </div>
 
 <script type="module">
-    import ListRenderer from './dist/list-renderer.js';
+    import ListRenderer from './dist/list-renderer.mjs';
 
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()

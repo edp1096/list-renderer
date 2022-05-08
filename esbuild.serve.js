@@ -7,7 +7,8 @@ require('esbuild').serve({
 }, {
     entryPoints: ["ts/list-renderer.ts"],
     bundle: true,
-    outdir: "dist",
+    // outdir: "dist",
+    outfile: "dist/list-renderer.mjs",
     minify: true,
     sourcemap: true,
     target: "es2020",
