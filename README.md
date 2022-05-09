@@ -2,7 +2,7 @@
 
 Very much limitful list renderer class for the purpose of my personal usage
 
-If one of vue, react, angular is too huge or not fit, try [`knockout.js`](https://github.com/knockout/knockout), not this :)
+If one of vue, react, angular is too huge or not fit, try [`knockout.js`](https://github.com/knockout/knockout) or [`mustache.js`](https://github.com/janl/mustache.js), not this :)
 
 See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](https://github.com/edp1096/list-renderer/blob/main/index.html)
 
