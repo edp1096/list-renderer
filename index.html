@@ -35,6 +35,27 @@
             </div>
         </div>
     </div>
+
+    <div id="planet-container">
+        <ul lr-loop="planet">
+            <li>{{name}} / {{distance}}</li>
+        </ul>
+    </div>
+
+    <table id="galaxy-container">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Distance</th>
+            </tr>
+        </thead>
+        <tbody lr-loop="galaxy">
+            <tr>
+                <td>{{name}}</td>
+                <td>{{distance}}</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 <!-- <script src="js/list-renderer.js"></script> -->
@@ -47,8 +68,16 @@
     const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
     lrAnimal.render()
 
+    const lrPlanet = new ListRenderer(document.getElementById("planet-container"))
+    lrPlanet.render()
+
+    const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
+    lrGalaxy.render()
+
     window.lrAnimal = lrAnimal
     window.lrHuman = lrHuman
+    window.lrPlanet = lrPlanet
+    window.lrGalaxy = lrGalaxy
 </script>
 <script>
 
@@ -86,11 +115,29 @@
         { name: "Elephant", age: 2 }
     ]
 
+    const planet = [
+        { name: "Mercury", distance: "0.39AU" },
+        { name: "Venus", distance: "0.723AU" },
+        { name: "Earth", distance: "1.0AU" },
+        { name: "Mars", distance: "1.524AU" },
+    ]
+
+    const galaxy = [
+        { name: "Milkyway", distance: "30kpc" },
+        { name: "Andromeda", distance: "67kpc" },
+        { name: "Sombrero", distance: "15kpc" },
+        { name: "Cigar", distance: "11.3kpc" },
+    ]
+
     // Uncomment below when using js/list-renderer.js
     // const lrHuman = new ListRenderer(document.getElementById("human-container"))
     // lrHuman.render()
     // const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
     // lrAnimal.render()
+    // const lrPlanet = new ListRenderer(document.getElementById("planet-container"))
+    // lrPlanet.render()
+    // const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
+    // lrGalaxy.render()
 </script>
 
 </html>
