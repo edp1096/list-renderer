@@ -58,7 +58,7 @@
     </table>
 </body>
 
-<script src="./js/list-renderer.js"></script>
+<!-- <script src="./js/list-renderer.js"></script> -->
 <script type="module">
     import ListRenderer from './dist/list-renderer.mjs'
 
@@ -137,6 +137,10 @@
     // lrPlanet.render()
     // const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
     // lrGalaxy.render()
+
+    document.addEventListener("DOMContentLoaded", () => {
+        alert(document.querySelector("[data-id='human1']").innerText)
+    })
 </script>
 
 </html>

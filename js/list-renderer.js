@@ -37,7 +37,7 @@ class ListRenderer {
             if (lrIDs != undefined && lrIDs != null) {
                 result = result.concat(lrIDs)
 
-                el.setAttribute("id", lrIDs)
+                el.setAttribute("data-id", lrIDs)
                 el.removeAttribute("lr-id")
             }
         }
@@ -54,14 +54,15 @@ class ListRenderer {
         const c = this.root.children
         const regexForVariables = /{{(.*?)}}/g
 
+        this.template = this.root.innerHTML
+
         for (const i in c) {
             if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
                 const arrayName = c[i].getAttribute("lr-loop")
                 const arrayDatas = this.evaluateString(arrayName)
 
                 if (arrayName != undefined) {
-                    this.template = c[i].outerHTML.trim()
-
+                    // this.template = c[i].outerHTML.trim()
                     const lrCLKs = this.prepareEvents(c[i].children)
 
                     for (const j in c[i].children) {
@@ -123,6 +124,8 @@ class ListRenderer {
 
                     }
                 }
+
+                c[i].removeAttribute("lr-loop")
             }
         }
     }

@@ -30,7 +30,7 @@ class ListRenderer {
                 el.setAttribute("onclick", clickCMD)
                 el.removeAttribute("lr-click")
             }
-            
+
             let lrIDs: string[] = new Array()
             if (el.children.length > 0) {
                 lrIDs = this.prepareEvents(el.children)
@@ -43,7 +43,7 @@ class ListRenderer {
 
                 // Because js do shallow copy so, not need to return changed attributes of elements
                 // structuredClone cannot be used because HTMLCollection object could not be cloned
-                el.setAttribute("id", idValue)
+                el.setAttribute("data-id", idValue)
                 el.removeAttribute("lr-id")
             }
         }
@@ -59,13 +59,15 @@ class ListRenderer {
         const c: HTMLCollection = this.root.children
         const regexForVariables: RegExp = /{{(.*?)}}/g
 
+        this.template = this.root.innerHTML
+
         for (const i in c) {
             if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
                 const listName: string = c[i].getAttribute("lr-loop")
                 const listDatas: string[] = this.evaluateString(listName)
 
                 if (listName != undefined) {
-                    this.template = c[i].outerHTML.trim()
+                    // this.template = c[i].outerHTML.trim()
                     const lrCLKs: string[] = this.prepareEvents(c[i].children)
 
                     for (const j in c[i].children) {
@@ -127,8 +129,11 @@ class ListRenderer {
 
                     }
                 }
+
+                c[i].removeAttribute("lr-loop")
             }
         }
+
     }
 
     render() { this.findAndSetList() }

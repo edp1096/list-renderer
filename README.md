@@ -11,7 +11,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 
 * Only an 1 depth list renderer in container
 * Also only 1 depth(s) `lr-if` in list
-* Support only `lr-click` and `$index` as event
+* Support only `lr-click` as event, `lr-id` as identifier, `$index` as index in the loop data
 
 ## Build
 
@@ -83,6 +83,7 @@ $ yarn build
 
 ### lr-loop
 * `lr-loop` should be placed only 1 depth under container
+* This attribute name in rendered result is removed when done to render or reload
 * Value of `lr-loop` means data variable name which is `const human` at below case
 ```html
 <div id="human-container">
@@ -108,6 +109,7 @@ $ yarn build
 
 ### lr-if
 * `lr-if` should be placed only 1 depth under `lr-loop`
+* This attribute name in rendered result is removed when done to render or reload
 * Variable should be placed at left side in condition definition
 ```html
 <div id="animal-container">
@@ -137,15 +139,15 @@ $ yarn build
 </script>
 ```
 
-### lr-click / lr-id
-* Same as `onclick` event / `id` attribute
-* Can be placed in template
-* If `id` attribute exists, `lr-id` overwrite
+### lr-click
+* Same as `onclick` event
+* Those attribute name(s) in rendered result are changed to `onclick` when done to render or reload
+* Should be placed only in template
 * Variable of loop object is not supported, just `$index` can be used
 ```html
 <div id="human-container">
     <div lr-loop="human">
-        <p lr-id="human$index">
+        <p>
             <span>{{name}}</span> / {{age}}
             <button lr-click="showIndex($index)">Show index</button>
         </p>
@@ -154,7 +156,41 @@ $ yarn build
 
 <script src="js/list-renderer.js"></script>
 <script>
-    function showIndex(index) { alert(index) }
+    const human = [
+        { name: "John", age: 30 },
+        { name: "Jane", age: 20 },
+        { name: "Joe" },
+        { name: "Sam", age: 10 },
+        { name: "Sally", age: 5 }
+    ]
+
+    const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    lrHuman.render()
+
+    document.addEventListener("DOMContentLoaded", () => {
+         alert(document.querySelector("[data-id='human1']").innerText)
+    })
+</script>
+```
+
+### lr-id
+* Different with `id` attribute
+* Those attribute name(s) in rendered result are changed to `data-id` when done to render or reload
+* Should be placed only in template
+* Variable of loop object is not supported, just `$index` can be used
+* For access the element, use `querySelector("[data-id=human1]")` or `querySelectorAll("[data-id]")`
+```html
+<div id="human-container">
+    <div lr-loop="human">
+        <p lr-id="human$index">
+            <span>{{name}}</span> / {{age}}
+        </p>
+    </div>
+</div>
+
+<script src="js/list-renderer.js"></script>
+<script>
+    function changeChild(index) { alert(index) }
 
     const human = [
         { name: "John", age: 30 },
