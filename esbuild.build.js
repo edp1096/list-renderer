@@ -3,18 +3,6 @@
 require('esbuild').build({
     entryPoints: ["ts/list-renderer.ts"],
     bundle: true,
-    outfile: "dist/list-renderer.js",
-    minify: true,
-    sourcemap: true,
-    target: "es2020",
-    format: "cjs",
-    define: { "process.env.NODE_ENV": "production" },
-    // define: { "process.env.NODE_ENV": "developemnt" },
-})
-
-require('esbuild').build({
-    entryPoints: ["ts/list-renderer.ts"],
-    bundle: true,
     outfile: "dist/list-renderer.mjs",
     minify: true,
     sourcemap: true,
