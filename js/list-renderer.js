@@ -26,6 +26,20 @@ class ListRenderer {
                 el.setAttribute("onclick", lrCLKs)
                 el.removeAttribute("lr-click")
             }
+
+            let lrIDs = new Array()
+            if (el.children.length > 0) {
+                lrIDs = this.prepareEvents(el.children)
+                if (lrIDs.length > 0) { result = result.concat(lrIDs) }
+            }
+
+            lrIDs = el.getAttribute("lr-id")
+            if (lrIDs != undefined && lrIDs != null) {
+                result = result.concat(lrIDs)
+
+                el.setAttribute("id", lrIDs)
+                el.removeAttribute("lr-id")
+            }
         }
 
         return result

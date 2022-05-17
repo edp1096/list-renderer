@@ -30,6 +30,22 @@ class ListRenderer {
                 el.setAttribute("onclick", clickCMD)
                 el.removeAttribute("lr-click")
             }
+            
+            let lrIDs: string[] = new Array()
+            if (el.children.length > 0) {
+                lrIDs = this.prepareEvents(el.children)
+                if (lrIDs.length > 0) { result = result.concat(lrIDs) }
+            }
+
+            const idValue: string = el.getAttribute("lr-id")
+            if (idValue != undefined && idValue != null) {
+                result = result.concat(idValue)
+
+                // Because js do shallow copy so, not need to return changed attributes of elements
+                // structuredClone cannot be used because HTMLCollection object could not be cloned
+                el.setAttribute("id", idValue)
+                el.removeAttribute("lr-id")
+            }
         }
 
         return result

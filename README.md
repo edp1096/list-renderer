@@ -137,14 +137,18 @@ $ yarn build
 </script>
 ```
 
-### lr-click
-* Same as `onclick` event
+### lr-click / lr-id
+* Same as `onclick` event / `id` attribute
 * Can be placed in template
+* If `id` attribute exists, `lr-id` overwrite
 * Variable of loop object is not supported, just `$index` can be used
 ```html
 <div id="human-container">
     <div lr-loop="human">
-        <p><span>{{name}}</span> / {{age}} <button lr-click="showIndex($index)">Show index</button></p>
+        <p lr-id="human$index">
+            <span>{{name}}</span> / {{age}}
+            <button lr-click="showIndex($index)">Show index</button>
+        </p>
     </div>
 </div>
 
