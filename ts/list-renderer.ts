@@ -1,142 +1,143 @@
 class ListRenderer {
     root: HTMLElement
     template: string
-    dataForDisplay: string[]
+    regexForVariables: RegExp
+    loopDatas: Object
+    baseTemplate: string
 
     constructor(root: HTMLElement) {
         this.root = root
         this.template = ""
-        this.dataForDisplay = new Array()
+        this.regexForVariables = /{{(.*?)}}/g
+        this.loopDatas = {}
+
+        this.baseTemplate = ""
     }
 
-    evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
+    evaluateString(cmd: string) { return new Function("'use strict'; return (" + cmd + ")")() }
 
-    prepareEvents(els: HTMLCollection): string[] {
-        let result: string[] = new Array()
+    parseTemplate(el: Element, dataName: string, loopName: string, idx: string) {
+        if (typeof el != "object") { return null }
 
-        for (const el of els) {
-            let lrCLKs: string[] = new Array()
-            if (el.children.length > 0) {
-                lrCLKs = this.prepareEvents(el.children)
-                if (lrCLKs.length > 0) { result = result.concat(lrCLKs) }
+        const data = this.loopDatas[loopName][idx]
+
+        let result = ""
+        let condIF = el.getAttribute("lr-if")
+        if (condIF != null) {
+            let isShow = true
+
+            condIF = condIF.replace("$index", idx)
+
+            for (const [k, v] of Object.entries(data)) {
+                const tmpCondIF = condIF.replace(k, `"${v}"`)
+                try { isShow = this.evaluateString(tmpCondIF) } catch (e) { continue }
+                break
             }
 
-            const clickCMD: string = el.getAttribute("lr-click")
-            if (clickCMD != undefined && clickCMD != null) {
-                result = result.concat(clickCMD)
+            el.removeAttribute("lr-if")
 
-                // Because js do shallow copy so, not need to return changed attributes of elements
-                // structuredClone cannot be used because HTMLCollection object could not be cloned
-                el.setAttribute("onclick", clickCMD)
-                el.removeAttribute("lr-click")
-            }
-
-            let lrIDs: string[] = new Array()
-            if (el.children.length > 0) {
-                lrIDs = this.prepareEvents(el.children)
-                if (lrIDs.length > 0) { result = result.concat(lrIDs) }
-            }
-
-            const idValue: string = el.getAttribute("lr-id")
-            if (idValue != undefined && idValue != null) {
-                result = result.concat(idValue)
-
-                // Because js do shallow copy so, not need to return changed attributes of elements
-                // structuredClone cannot be used because HTMLCollection object could not be cloned
-                el.setAttribute("data-id", idValue)
-                el.removeAttribute("lr-id")
+            if ((isShow != null) && (!isShow)) {
+                el.innerHTML = ""
+                return el
             }
         }
 
-        return result
-    }
+        let condCLK = el.getAttribute("lr-click")
+        if (condCLK != undefined) {
+            condCLK = condCLK.replace("$index", idx)
 
-    findAndSetList() {
-        this.dataForDisplay = new Array()
+            el.setAttribute("onclick", condCLK)
+            el.removeAttribute("lr-click")
+        }
 
-        const conds: string[] = new Array()
-        const variableMatchesList: string[][] = new Array()
-        const c: HTMLCollection = this.root.children
-        const regexForVariables: RegExp = /{{(.*?)}}/g
+        let condCHG = el.getAttribute("lr-change")
+        if (condCHG != undefined) {
+            condCHG = condCHG.replace("$index", idx)
 
-        this.template = this.root.innerHTML
+            el.setAttribute("onchange", condCHG)
+            el.removeAttribute("lr-change")
+        }
 
-        for (const i in c) {
-            if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
-                const listName: string = c[i].getAttribute("lr-loop")
-                const listDatas: string[] = this.evaluateString(listName)
+        let condCHK = el.getAttribute("lr-checked")
+        if (condCHK != undefined) {
+            condCHK = condCHK.replace("$index", idx)
 
-                if (listName != undefined) {
-                    // this.template = c[i].outerHTML.trim()
-                    const lrCLKs: string[] = this.prepareEvents(c[i].children)
+            el.setAttribute("onchange", condCHK)
+            el.removeAttribute("lr-change")
+        }
 
-                    for (const j in c[i].children) {
-                        const tpl: Element = c[i].children[j]
-                        if (tpl.outerHTML != undefined) {
-                            conds.push(tpl.getAttribute("lr-if"))
+        let dirID = el.getAttribute("lr-id")
+        if (dirID != undefined) {
+            dirID = dirID.replace("$index", idx)
+            el.setAttribute("data-id", dirID)
+            el.removeAttribute("lr-id")
+        }
 
-                            tpl.removeAttribute("lr-if")
-                            this.dataForDisplay.push(tpl.outerHTML.trim())
-                            variableMatchesList.push(this.dataForDisplay[this.dataForDisplay.length - 1].match(regexForVariables))
-                        }
-                    }
+        if (el.children != undefined && el.children.length > 0) {
+            for (let i in el.children) {
+                const child = this.parseTemplate(el.children[i], dataName, loopName, idx)
+                if (child && child.innerHTML.trim() != "") { result += child.outerHTML }
+            }
 
-                    c[i].innerHTML = ""
+            el.innerHTML = ""
+        } else {
+            if (el.innerHTML != "") {
+                const attrs = el.getAttributeNames()
+                for (let i in attrs) {
+                    let attrValue = el.getAttribute(attrs[i])
+                    attrValue = attrValue.replace("$index", idx)
+                    attrValue = attrValue.replace(this.regexForVariables, (_, val) => {
+                        let value = this.evaluateString(`${dataName}["${val}"]`)
+                        if (value == undefined) { value = "" }
+                        return value
+                    })
 
-                    for (const idx in listDatas) {
-                        const listData: string = listDatas[idx]
-
-                        const lrCLKsChange: string[] = new Array()
-                        for (const j in lrCLKs) {
-                            const lrCLK = lrCLKs[j]
-                            const lrCLKChange = lrCLK.replace("$index", idx)
-                            lrCLKsChange.push(lrCLKChange)
-                        }
-
-                        for (const k in this.dataForDisplay) {
-                            let isInsert: boolean = true
-                            let dataChanged: string = this.dataForDisplay[k]
-
-                            for (const l in lrCLKsChange) {
-                                const lrCLKChange = lrCLKsChange[l]
-                                dataChanged = dataChanged.replace(lrCLKs[l], lrCLKChange)
-                            }
-
-                            const variableMatches: string[] = variableMatchesList[k]
-
-                            for (const l in variableMatches) {
-                                const variableMatch: string = variableMatches[l]
-                                const tplVarName: string = variableMatch.replace(regexForVariables, "$1")
-
-                                if ((conds[k] != null) && (conds[k].indexOf(tplVarName) != -1)) {
-                                    const condition = conds[k].replace(tplVarName, "'" + listData[tplVarName] + "'")
-                                    isInsert = this.evaluateString(condition)
-                                }
-
-                                if (!isInsert) {
-                                    dataChanged = ""
-                                    break
-                                }
-
-                                let tplVarValue = listData[tplVarName]
-                                if (tplVarValue == undefined) { tplVarValue = "" }
-                                dataChanged = dataChanged.replace(variableMatch, tplVarValue)
-                                if (tplVarValue != undefined) { dataChanged = dataChanged.replace(variableMatch, tplVarValue) }
-                            }
-
-                            c[i].innerHTML += dataChanged
-                        }
-
-                    }
+                    el.setAttribute(attrs[i], attrValue.replace("$index", idx))
                 }
-
-                c[i].removeAttribute("lr-loop")
+                el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_, cmd) => {
+                    let value = this.evaluateString(`${dataName}["${cmd}"]`)
+                    if (value == undefined) { value = "" }
+                    return value
+                })
             }
         }
 
+        if (result.length > 0) {
+            el.innerHTML = result
+        }
+
+        return el
     }
 
-    render() { this.findAndSetList() }
+    renderLoop() {
+        this.template = this.root.innerHTML
+        const c = this.root.children
+
+        for (let i in c) {
+            if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
+                const loopName = c[i].getAttribute("lr-loop")
+                const loopData = this.evaluateString(loopName)
+                this.loopDatas[loopName] = loopData
+
+                this.baseTemplate = c[i].innerHTML
+                let result = new Array()
+
+                if (loopName != undefined) {
+                    for (let j in loopData) {
+                        c[i].innerHTML = this.baseTemplate
+
+                        const child = this.parseTemplate(c[i], `${loopName}[${j}]`, loopName, j)
+                        result.push(child.innerHTML)
+                    }
+
+                    c[i].innerHTML = result.join("").trim()
+                    c[i].removeAttribute("lr-loop")
+                }
+            }
+        }
+    }
+
+    render() { this.renderLoop() }
 
     restoreToTemplate() { this.root.innerHTML = this.template }
 

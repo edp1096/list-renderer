@@ -69,8 +69,8 @@
     </div>
 </body>
 
-<script src="./js/list-renderer.js"></script>
-<!-- <script type="module">
+<!-- <script src="./js/list-renderer.js"></script> -->
+<script type="module">
     import ListRenderer from './dist/list-renderer.mjs'
 
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
@@ -84,12 +84,15 @@
 
     const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
     lrGalaxy.render()
+    const lrFood = new ListRenderer(document.getElementById("food-container"))
+    lrFood.render()
 
     window.lrAnimal = lrAnimal
     window.lrHuman = lrHuman
     window.lrPlanet = lrPlanet
     window.lrGalaxy = lrGalaxy
-</script> -->
+    window.lrFood = lrFood
+</script>
 <script>
     async function addHumanData() {
         human.push({ name: "Mark", age: "15" })
@@ -148,16 +151,16 @@
     const myFoodIndex = 1
 
     // Uncomment below when using js/list-renderer.js
-    const lrHuman = new ListRenderer(document.getElementById("human-container"))
-    lrHuman.render()
-    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
-    lrAnimal.render()
-    const lrPlanet = new ListRenderer(document.getElementById("planet-container"))
-    lrPlanet.render()
-    const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
-    lrGalaxy.render()
-    const lrFood = new ListRenderer(document.getElementById("food-container"))
-    lrFood.render()
+    // const lrHuman = new ListRenderer(document.getElementById("human-container"))
+    // lrHuman.render()
+    // const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
+    // lrAnimal.render()
+    // const lrPlanet = new ListRenderer(document.getElementById("planet-container"))
+    // lrPlanet.render()
+    // const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
+    // lrGalaxy.render()
+    // const lrFood = new ListRenderer(document.getElementById("food-container"))
+    // lrFood.render()
 
     // document.addEventListener("DOMContentLoaded", () => {
     //     alert(document.querySelector("[data-id='human1']").innerText)
