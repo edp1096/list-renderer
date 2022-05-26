@@ -239,3 +239,8 @@ $ yarn build
     lrHuman.render()
 </script>
 ```
+
+
+## License
+
+Public domain.
