@@ -10,8 +10,10 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 ## Limitation
 
 * Only an 1 depth list renderer in container
-* Also only 1 depth(s) `lr-if` in list
-* Support only `lr-click` as event, `lr-id` as identifier, `$index` as index in the loop data
+* Support only
+    * `lr-click` and `lr-change` as event
+    * `lr-id` as not identifier just be changed to `data-id`,
+    * `$index` as index in the loop data
 
 ## Build
 
