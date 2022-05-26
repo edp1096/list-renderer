@@ -76,15 +76,6 @@ $ yarn browser
     window.lrAnimal = lrAnimal
     window.lrHuman = lrHuman
 </script>
-<script>
-    const human = [
-        { name: "John", age: 30 },
-        { name: "Jane", age: 20 }
-    ]
-
-    const lrHuman = new ListRenderer(document.getElementById("human-container"))
-    lrHuman.render()
-</script>
 ```
 
 ## Directives
