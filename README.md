@@ -93,6 +93,7 @@ $ yarn browser
 * `lr-loop` should be placed only 1 depth under container
 * This attribute name in rendered result is removed when done to render or reload
 * Value of `lr-loop` means data variable name which is `const human` at below case
+* `undefined` values are changed to empty string value("")
 ```html
 <div id="human-container">
     <div lr-loop="human">
@@ -116,7 +117,6 @@ $ yarn browser
 ```
 
 ### lr-if
-* `lr-if` should be placed only 1 depth under `lr-loop`
 * This attribute name in rendered result is removed when done to render or reload
 * Variable should be placed at left side in condition definition
 ```html
@@ -156,7 +156,7 @@ $ yarn browser
 <div id="human-container">
     <div lr-loop="human">
         <p>
-            <span>{{name}}</span> / {{age}}
+            <span>{{name}} / {{age}}</span>
             <button lr-click="showIndex($index)">Show index</button>
         </p>
     </div>
@@ -164,6 +164,8 @@ $ yarn browser
 
 <script src="./dist/list-renderer.js"></script>
 <script>
+    function showIndex(index) { alert(index) }
+
     const human = [
         { name: "John", age: 30 },
         { name: "Jane", age: 20 },
@@ -174,10 +176,6 @@ $ yarn browser
 
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()
-
-    document.addEventListener("DOMContentLoaded", () => {
-         alert(document.querySelector("[data-id='human1']").innerText)
-    })
 </script>
 ```
 
@@ -191,7 +189,7 @@ $ yarn browser
 <div id="human-container">
     <div lr-loop="human">
         <p lr-id="human$index">
-            <span>{{name}}</span> / {{age}}
+            <span>{{name}} / {{age}}</span>
         </p>
     </div>
 </div>
