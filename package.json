@@ -4,7 +4,8 @@
   "license": "WTFPL",
   "scripts": {
     "prestart": "tsc-watch",
-    "build": "node esbuild.build.js",
+    "module": "node esbuild.build-module.js",
+    "browser": "node esbuild.build-browser.js",
     "serve": "node esbuild.serve.js"
   },
   "devDependencies": {

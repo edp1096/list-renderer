@@ -147,4 +147,5 @@ class ListRenderer {
     }
 }
 
+(globalThis as any).ListRenderer = ListRenderer
 export default ListRenderer
