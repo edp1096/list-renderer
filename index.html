@@ -21,7 +21,7 @@
 
     <div id="human-container">
         <div lr-loop="human">
-            <p lr-id="human$index"><span>{{name}}</span> / {{age}} <button type="button" lr-click="showIndex($index)">Show index</button></p>
+            <p lr-id="human$index"><span>{{name}} / {{age}}</span> <button type="button" lr-click="showIndex($index)">Show index</button></p>
         </div>
     </div>
 
@@ -30,9 +30,9 @@
             <div lr-if="age > 5">
                 <p>{{name}} / {{age}}</p>
             </div>
-            <div lr-if="name == 'Bird'">
+            <!-- <div lr-if="name == 'Bird'">
                 <p>{{name}} / {{age}}</p>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -51,15 +51,16 @@
         </thead>
         <tbody lr-loop="galaxy">
             <tr>
-                <td>{{name}}</td>
+                <td lr-if="name == 'Milkyway'">은하수</td>
+                <td lr-if="name != 'Milkyway'">{{name}}</td>
                 <td>{{distance}}</td>
             </tr>
         </tbody>
     </table>
 </body>
 
-<!-- <script src="./js/list-renderer.js"></script> -->
-<script type="module">
+<script src="./js/list-renderer.js"></script>
+<!-- <script type="module">
     import ListRenderer from './dist/list-renderer.mjs'
 
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
@@ -78,7 +79,7 @@
     window.lrHuman = lrHuman
     window.lrPlanet = lrPlanet
     window.lrGalaxy = lrGalaxy
-</script>
+</script> -->
 <script>
     async function addHumanData() {
         human.push({ name: "Mark", age: "15" })
@@ -98,13 +99,13 @@
 
     function showIndex(index) { alert(index) }
 
-    const human = [
-        { name: "John", age: 30 },
-        { name: "Jane", age: 20 },
-        { name: "Joe" },
-        { name: "Sam", age: 10 },
-        { name: "Sally", age: 5 }
-    ]
+    // const human = [
+    //     { name: "John", age: 30 },
+    //     { name: "Jane", age: 20 },
+    //     { name: "Joe" },
+    //     { name: "Sam", age: 10 },
+    //     { name: "Sally", age: 5 }
+    // ]
     const animal = [
         { name: "Dog", age: 10 },
         { name: "Cat", age: 5 },
@@ -114,33 +115,33 @@
         { name: "Elephant", age: 2 }
     ]
 
-    const planet = [
-        { name: "Mercury", distance: "0.39AU" },
-        { name: "Venus", distance: "0.723AU" },
-        { name: "Earth", distance: "1.0AU" },
-        { name: "Mars", distance: "1.524AU" },
-    ]
+    // const planet = [
+    //     { name: "Mercury", distance: "0.39AU" },
+    //     { name: "Venus", distance: "0.723AU" },
+    //     { name: "Earth", distance: "1.0AU" },
+    //     { name: "Mars", distance: "1.524AU" },
+    // ]
 
-    const galaxy = [
-        { name: "Milkyway", distance: "30kpc" },
-        { name: "Andromeda", distance: "67kpc" },
-        { name: "Sombrero", distance: "15kpc" },
-        { name: "Cigar", distance: "11.3kpc" },
-    ]
+    // const galaxy = [
+    //     { name: "Milkyway", distance: "30kpc" },
+    //     { name: "Andromeda", distance: "67kpc" },
+    //     { name: "Sombrero", distance: "15kpc" },
+    //     { name: "Cigar", distance: "11.3kpc" },
+    // ]
 
     // Uncomment below when using js/list-renderer.js
     // const lrHuman = new ListRenderer(document.getElementById("human-container"))
     // lrHuman.render()
-    // const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
-    // lrAnimal.render()
+    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
+    lrAnimal.render()
     // const lrPlanet = new ListRenderer(document.getElementById("planet-container"))
     // lrPlanet.render()
     // const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
     // lrGalaxy.render()
 
-    document.addEventListener("DOMContentLoaded", () => {
-        alert(document.querySelector("[data-id='human1']").innerText)
-    })
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     alert(document.querySelector("[data-id='human1']").innerText)
+    // })
 </script>
 
 </html>
