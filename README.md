@@ -9,7 +9,7 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 
 ## Limitation
 
-* Only an 1 depth list renderer in container
+* Only 1 depth list renderer in container
 * Support only
     * `lr-click` and `lr-change` as event
     * `lr-id` as not identifier just be changed to `data-id`,
