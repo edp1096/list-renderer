@@ -58,7 +58,6 @@ class ListRenderer {
         }
 
         if (el.children != undefined && el.children.length > 0) {
-            let removeIDX = new Array()
             for (let i in el.children) {
                 const child = this.parseTemplate(el.children[i], dataName, loopName, idx)
                 if (child && child.innerHTML.trim() != "") { result += child.outerHTML }
