@@ -15,10 +15,6 @@ class ListRenderer {
 
         const data = this.loopDatas[loopName][idx]
 
-        if (loopName == "human") {
-            console.log(el, data)
-        }
-
         let result = ""
         let condIF = el.getAttribute("lr-if")
         if (condIF != null) {
@@ -30,12 +26,13 @@ class ListRenderer {
                 break
             }
 
+            el.removeAttribute("lr-if")
+
             if ((isShow != null) && (!isShow)) {
-                el.outerHTML = ""
-                return null
+                el.innerHTML = ""
+                return el
             }
         }
-
 
         let condCLK = el.getAttribute("lr-click")
         if (condCLK != undefined) {
@@ -55,15 +52,19 @@ class ListRenderer {
 
         let dirID = el.getAttribute("lr-id")
         if (dirID != undefined) {
+            dirID = dirID.replace("$index", idx)
             el.setAttribute("data-id", dirID)
             el.removeAttribute("lr-id")
         }
 
         if (el.children != undefined && el.children.length > 0) {
+            let removeIDX = new Array()
             for (let i in el.children) {
                 const child = this.parseTemplate(el.children[i], dataName, loopName, idx)
-                if (child) { result += child.outerHTML }
+                if (child && child.innerHTML.trim() != "") { result += child.outerHTML }
             }
+
+            el.innerHTML = ""
         } else {
             if (el.innerHTML != "") {
                 el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_, cmd) => {
