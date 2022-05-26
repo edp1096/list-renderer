@@ -57,6 +57,16 @@
             </tr>
         </tbody>
     </table>
+
+    <hr />
+
+    <div id="food-container">
+        <label for="food">Food</label>
+        <select id="food" name="food" lr-loop="food">
+            <option value="{{value}}$index" lr-if="$index == myFoodIndex" selected>{{name}}</option>
+            <option value="{{value}}$index" lr-if="$index != myFoodIndex">{{name}}</option>
+        </select>
+    </div>
 </body>
 
 <script src="./js/list-renderer.js"></script>
@@ -129,6 +139,14 @@
         { name: "Cigar", distance: "11.3kpc" },
     ]
 
+    const food = [
+        { name: "Pizza", value: "pizza" },
+        { name: "Hamburger", value: "hamburger" },
+        { name: "Steak", value: "steak" },
+    ]
+
+    const myFoodIndex = 1
+
     // Uncomment below when using js/list-renderer.js
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()
@@ -138,6 +156,8 @@
     lrPlanet.render()
     const lrGalaxy = new ListRenderer(document.getElementById("galaxy-container"))
     lrGalaxy.render()
+    const lrFood = new ListRenderer(document.getElementById("food-container"))
+    lrFood.render()
 
     // document.addEventListener("DOMContentLoaded", () => {
     //     alert(document.querySelector("[data-id='human1']").innerText)

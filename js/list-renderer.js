@@ -20,6 +20,8 @@ class ListRenderer {
         if (condIF != null) {
             let isShow = true
 
+            condIF = condIF.replace("$index", idx)
+
             for (const [k, v] of Object.entries(data)) {
                 const tmpCondIF = condIF.replace(k, `"${v}"`)
                 try { isShow = this.evaluateString(tmpCondIF) } catch (e) { continue }
@@ -50,6 +52,14 @@ class ListRenderer {
             el.removeAttribute("lr-change")
         }
 
+        let condCHK = el.getAttribute("lr-checked")
+        if (condCHK != undefined) {
+            condCHK = condCHK.replace("$index", idx)
+
+            el.setAttribute("onchange", condCHK)
+            el.removeAttribute("lr-change")
+        }
+
         let dirID = el.getAttribute("lr-id")
         if (dirID != undefined) {
             dirID = dirID.replace("$index", idx)
@@ -66,6 +76,18 @@ class ListRenderer {
             el.innerHTML = ""
         } else {
             if (el.innerHTML != "") {
+                const attrs = el.getAttributeNames()
+                for (let i in attrs) {
+                    let attrValue = el.getAttribute(attrs[i])
+                    attrValue = attrValue.replace("$index", idx)
+                    attrValue = attrValue.replace(this.regexForVariables, (_, val) => {
+                        let value = this.evaluateString(`${dataName}["${val}"]`)
+                        if (value == undefined) { value="" }
+                        return value
+                    })
+
+                    el.setAttribute(attrs[i], attrValue.replace("$index", idx))
+                }
                 el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_, cmd) => {
                     let value = this.evaluateString(`${dataName}["${cmd}"]`)
                     if (value == undefined) { value = "" }

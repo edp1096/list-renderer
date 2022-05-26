@@ -31,7 +31,7 @@ $ yarn build
 ```html
 <div id="human-container">
     <div lr-loop="human">
-        <p><span>{{name}}</span> / {{age}}</p>
+        <p><span customattr="{{name}}{{age}}">{{name}} / {{age}}</span></p>
     </div>
 </div>
 
@@ -52,7 +52,7 @@ $ yarn build
 ```html
 <div id="human-container">
     <div lr-loop="human">
-        <p><span>{{name}}</span> / {{age}}</p>
+        <p><span customattr="{{name}}{{age}}">{{name}} / {{age}}</span></p>
     </div>
 </div>
 
