@@ -243,4 +243,4 @@ $ yarn build
 
 ## License
 
-[Public domain.](https://creativecommons.org/publicdomain/mark/1.0/deed.ko)
+[Public domain.](https://unlicense.org)
