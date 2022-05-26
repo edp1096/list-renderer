@@ -43,7 +43,7 @@ $ yarn browser
     </div>
 </div>
 
-<script src="js/list-renderer.js"></script>
+<script src="./dist/list-renderer.js"></script>
 <script>
     const human = [
         { name: "John", age: 30 },
@@ -100,7 +100,7 @@ $ yarn browser
     </div>
 </div>
 
-<script src="js/list-renderer.js"></script>
+<script src="./dist/list-renderer.js"></script>
 <script>
     const human = [
         { name: "John", age: 30 },
@@ -131,7 +131,7 @@ $ yarn browser
     </div>
 </div>
 
-<script src="js/list-renderer.js"></script>
+<script src="./dist/list-renderer.js"></script>
 <script>
     const animal = [
         { name: "Dog", age: 10 },
@@ -162,7 +162,7 @@ $ yarn browser
     </div>
 </div>
 
-<script src="js/list-renderer.js"></script>
+<script src="./dist/list-renderer.js"></script>
 <script>
     const human = [
         { name: "John", age: 30 },
@@ -196,7 +196,7 @@ $ yarn browser
     </div>
 </div>
 
-<script src="js/list-renderer.js"></script>
+<script src="./dist/list-renderer.js"></script>
 <script>
     function changeChild(index) { alert(index) }
 
@@ -223,7 +223,7 @@ $ yarn browser
     </div>
 </div>
 
-<script src="js/list-renderer.js"></script>
+<script src="./dist/list-renderer.js"></script>
 <script>
     function addHumanData() {
         human.push({ name: "Mark", age: "15" })
