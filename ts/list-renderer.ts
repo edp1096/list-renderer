@@ -16,9 +16,9 @@ class ListRenderer {
         this.baseTemplate = ""
     }
 
-    evaluateString(cmd: string) { return new Function("'use strict'; return (" + cmd + ")")() }
+    evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
 
-    parseTemplate(el: Element, dataName: string, loopName: string, idx: string) {
+    parseTemplate(el: Element, dataName: string, loopName: string, idx: string): Element | null {
         if (typeof el != "object") { return null }
 
         const data = this.loopDatas[loopName][idx]
@@ -112,7 +112,7 @@ class ListRenderer {
         return el
     }
 
-    renderLoop() {
+    renderLoop(): void {
         this.template = this.root.innerHTML
         const c = this.root.children
 
@@ -125,7 +125,7 @@ class ListRenderer {
                 this.loopDatas[loopName] = loopData
 
                 this.baseTemplate = c[i].innerHTML
-                let result = new Array()
+                let result: string[] = new Array()
 
                 if (loopName != undefined) {
                     for (let j in loopData) {
@@ -143,11 +143,11 @@ class ListRenderer {
         }
     }
 
-    render() { this.renderLoop() }
+    render(): void { this.renderLoop() }
 
-    restoreToTemplate() { this.root.innerHTML = this.template }
+    restoreToTemplate(): void { this.root.innerHTML = this.template }
 
-    reload() {
+    reload(): void {
         this.restoreToTemplate()
         this.render()
     }

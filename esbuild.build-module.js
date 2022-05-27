@@ -1,6 +1,6 @@
-// import { build } from 'esbuild'
+import { build } from 'esbuild'
 
-require('esbuild').build({
+build({
     entryPoints: ["ts/list-renderer.ts"],
     bundle: true,
     outfile: "dist/list-renderer.mjs",
