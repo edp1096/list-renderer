@@ -22,7 +22,7 @@
     <div id="human-container">
         <div lr-loop="human">
             <p lr-id="human$index">
-                <input type="checkbox" id="humansel$index" name="human$index" lr-change="alert('$index')" />
+                <input type="checkbox" id="humansel$index" name="human$index" lr-change="alert('{{name}}/$index')" />
                 <span>{{name}} / {{age}}</span>
                 <button type="button" lr-click="showIndex($index)">Show index</button>
             </p>
