@@ -1,8 +1,10 @@
+interface LoopDataType { [key: string]: LoopDataType }
+
 class ListRenderer {
     root: HTMLElement
     template: string
     regexForVariables: RegExp
-    loopDatas: Object
+    loopDatas: LoopDataType
     baseTemplate: string
 
     constructor(root: HTMLElement) {
@@ -85,8 +87,9 @@ class ListRenderer {
                 const attrs = el.getAttributeNames()
                 for (let i in attrs) {
                     let attrValue = el.getAttribute(attrs[i])
+                    if (attrValue == null) { continue }
                     attrValue = attrValue.replace("$index", idx)
-                    attrValue = attrValue.replace(this.regexForVariables, (_, val) => {
+                    attrValue = attrValue.replace(this.regexForVariables, (_: string, val: string) => {
                         let value = this.evaluateString(`${dataName}["${val}"]`)
                         if (value == undefined) { value = "" }
                         return value
@@ -94,7 +97,7 @@ class ListRenderer {
 
                     el.setAttribute(attrs[i], attrValue.replace("$index", idx))
                 }
-                el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_, cmd) => {
+                el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_: string, cmd: string) => {
                     let value = this.evaluateString(`${dataName}["${cmd}"]`)
                     if (value == undefined) { value = "" }
                     return value
@@ -115,8 +118,10 @@ class ListRenderer {
 
         for (let i in c) {
             if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
-                const loopName = c[i].getAttribute("lr-loop")
-                const loopData = this.evaluateString(loopName)
+                const loopName: string | null = c[i].getAttribute("lr-loop")
+                if (loopName == undefined || loopName == null) { continue }
+
+                const loopData: LoopDataType = this.evaluateString(loopName)
                 this.loopDatas[loopName] = loopData
 
                 this.baseTemplate = c[i].innerHTML
@@ -127,6 +132,7 @@ class ListRenderer {
                         c[i].innerHTML = this.baseTemplate
 
                         const child = this.parseTemplate(c[i], `${loopName}[${j}]`, loopName, j)
+                        if (child == null) { continue }
                         result.push(child.innerHTML)
                     }
 
