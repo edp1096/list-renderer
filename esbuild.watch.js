@@ -8,7 +8,7 @@ const serveDIR = "serve"
 const clients = []
 const port = 8000
 
-const watchBrowser = {
+const watchJS = {
     entryPoints: ["ts/list-renderer.ts"],
     bundle: true,
     outfile: `${serveDIR}/list-renderer.js`,
@@ -24,7 +24,7 @@ const watchBrowser = {
     },
 }
 
-const watchModule = {
+const watchMJS = {
     entryPoints: ["ts/list-renderer.ts"],
     bundle: true,
     outfile: `${serveDIR}/list-renderer.mjs`,
@@ -48,14 +48,14 @@ let watcher
 
 if (!fs.existsSync(serveDIR)) { fs.mkdirSync(serveDIR) }
 
-if (arg == "browser") {
-    arg = "browser"
-    watcher = watchBrowser
-    fs.copyFile("html/browser.html", `${serveDIR}/index.html`, (err) => { if (err) throw err })
+if (arg == "js") {
+    arg = "js"
+    watcher = watchJS
+    fs.copyFile("html/js.html", `${serveDIR}/index.html`, (err) => { if (err) throw err })
 } else {
-    arg = "module"
-    watcher = watchModule
-    fs.copyFile("html/module.html", `${serveDIR}/index.html`, (err) => { if (err) throw err })
+    arg = "mjs"
+    watcher = watchMJS
+    fs.copyFile("html/mjs.html", `${serveDIR}/index.html`, (err) => { if (err) throw err })
 }
 
 build(watcher).catch(() => process.exit(1))

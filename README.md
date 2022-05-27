@@ -19,19 +19,27 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 
 * Require [esbuild](https://github.com/evanw/esbuild)
 
-* Typescript
+* Module
 
 ```powershell
 $ yarn install
-$ yarn module
+$ yarn mjs
 ```
 
-* Javascript
+* Browser JS
 
 ```powershell
 $ yarn install
-$ yarn browser
+$ yarn js
 ```
+
+* Both
+
+```powershell
+$ yarn install
+$ yarn all
+```
+
 ## Load
 
 ### Javascript

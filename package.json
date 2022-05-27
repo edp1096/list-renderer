@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "prestart": "tsc-watch",
-    "module": "node esbuild.build-module.js",
-    "browser": "node esbuild.build-browser.js",
+    "mjs": "node esbuild.build-mjs.js",
+    "js": "node esbuild.build-js.js",
+    "all": "node esbuild.build-mjs.js && node esbuild.build-js.js",
     "watch": "node esbuild.watch.js"
   },
   "devDependencies": {
