@@ -6,6 +6,7 @@ class ListRenderer {
     regexForVariables: RegExp
     loopDatas: LoopDataType
     baseTemplate: string
+    singleTags: string[]
 
     constructor(root: HTMLElement) {
         this.root = root
@@ -14,6 +15,7 @@ class ListRenderer {
         this.loopDatas = {}
 
         this.baseTemplate = ""
+        this.singleTags = ["input", "img", "br", "hr", "link", "meta", "base", "area", "col", "embed", "keygen", "param", "source", "track", "wbr", "command"]
     }
 
     evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
@@ -78,12 +80,23 @@ class ListRenderer {
         if (el.children != undefined && el.children.length > 0) {
             for (let i in el.children) {
                 const child = this.parseTemplate(el.children[i], dataName, loopName, idx)
-                if (child && child.innerHTML.trim() != "") { result += child.outerHTML }
+                if (child) {
+                    switch (true) {
+                        case this.singleTags.includes(child.tagName.toLowerCase()):
+                            result += child.outerHTML
+                            break
+                        case (child.innerHTML.trim() != ""):
+                            result += child.outerHTML
+                            break
+                        default:
+                            break
+                    }
+                }
             }
 
             el.innerHTML = ""
         } else {
-            if (el.innerHTML != "") {
+            if (el.innerHTML != "" || this.singleTags.includes(el.tagName.toLowerCase())) {
                 const attrs = el.getAttributeNames()
                 for (let i in attrs) {
                     let attrValue = el.getAttribute(attrs[i])
@@ -97,11 +110,14 @@ class ListRenderer {
 
                     el.setAttribute(attrs[i], attrValue.replace("$index", idx))
                 }
-                el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_: string, cmd: string) => {
-                    let value = this.evaluateString(`${dataName}["${cmd}"]`)
-                    if (value == undefined) { value = "" }
-                    return value
-                })
+
+                if (!this.singleTags.includes(el.tagName.toLowerCase())) {
+                    el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_: string, cmd: string) => {
+                        let value = this.evaluateString(`${dataName}["${cmd}"]`)
+                        if (value == undefined) { value = "" }
+                        return value
+                    })
+                }
             }
         }
 

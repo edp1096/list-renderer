@@ -21,7 +21,11 @@
 
     <div id="human-container">
         <div lr-loop="human">
-            <p lr-id="human$index"><span>{{name}} / {{age}}</span> <button type="button" lr-click="showIndex($index)">Show index</button></p>
+            <p lr-id="human$index">
+                <input type="checkbox" id="humansel$index" name="human$index" lr-change="alert('$index')" />
+                <span>{{name}} / {{age}}</span>
+                <button type="button" lr-click="showIndex($index)">Show index</button>
+            </p>
         </div>
     </div>
 
@@ -88,8 +92,8 @@
     const lrFood = new ListRenderer(document.getElementById("food-container"))
     lrFood.render()
 
-    window.lrAnimal = lrAnimal
     window.lrHuman = lrHuman
+    window.lrAnimal = lrAnimal
     window.lrPlanet = lrPlanet
     window.lrGalaxy = lrGalaxy
     window.lrFood = lrFood
