@@ -128,38 +128,48 @@ class ListRenderer {
         return el
     }
 
-    renderLoop(): void {
-        this.template = this.root.innerHTML
-        const c = this.root.children
 
-        for (let i in c) {
-            if ((c[i].nodeType != undefined) && (c[i].tagName.toLowerCase() != "script")) {
-                const loopName: string | null = c[i].getAttribute("lr-loop")
-                if (loopName == undefined || loopName == null) { continue }
 
-                const loopData: LoopDataType = this.evaluateString(loopName)
-                this.loopDatas[loopName] = loopData
+    renderLoop(el: Element): void {
+        if ((el.nodeType != undefined) && (el.tagName.toLowerCase() != "script")) {
+            const loopName: string | null = el.getAttribute("lr-loop")
+            if (loopName == undefined || loopName == null) { return }
 
-                this.baseTemplate = c[i].innerHTML
-                let result: string[] = new Array()
+            const loopData: LoopDataType = this.evaluateString(loopName)
+            this.loopDatas[loopName] = loopData
 
-                if (loopName != undefined) {
-                    for (let j in loopData) {
-                        c[i].innerHTML = this.baseTemplate
+            this.baseTemplate = el.innerHTML
+            let result: string[] = new Array()
 
-                        const child = this.parseTemplate(c[i], `${loopName}[${j}]`, loopName, j)
-                        if (child == null) { continue }
-                        result.push(child.innerHTML)
-                    }
+            if (loopName != undefined) {
+                for (let j in loopData) {
+                    el.innerHTML = this.baseTemplate
 
-                    c[i].innerHTML = result.join("").trim()
-                    c[i].removeAttribute("lr-loop")
+                    const child = this.parseTemplate(el, `${loopName}[${j}]`, loopName, j)
+                    if (child == null) { continue }
+                    result.push(child.innerHTML)
                 }
+
+                el.innerHTML = result.join("").trim()
+                el.removeAttribute("lr-loop")
             }
         }
     }
 
-    render(): void { this.renderLoop() }
+    render(): void {
+        this.template = this.root.innerHTML
+
+        switch (this.root.tagName.toLowerCase()) {
+            case "list-renderer":
+                this.renderLoop(this.root)
+                this.root.outerHTML = this.root.innerHTML
+                break
+            default:
+                const c = this.root.children
+                for (let i in c) { this.renderLoop(c[i]) }
+                break
+        }
+    }
 
     restoreToTemplate(): void { this.root.innerHTML = this.template }
 
@@ -170,4 +180,6 @@ class ListRenderer {
 }
 
 (globalThis as any).ListRenderer = ListRenderer
+globalThis.customElements.define('list-renderer', class extends HTMLElement { })
+
 export default ListRenderer

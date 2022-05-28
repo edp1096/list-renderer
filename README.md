@@ -86,6 +86,29 @@ $ yarn all
 </script>
 ```
 
+## Custom tag
+* It is possible to use as below instead of double lid of `div`
+```html
+<list-renderer lr-loop="family">
+    <p lr-id="family$index"><span>{{name}} / {{age}}</span></p>
+</list-renderer>
+
+<script>
+    const family = [
+        { member: "father", name: "John", age: 30 },
+        { member: "mother", name: "Jane", age: 20 },
+        { member: "son", name: "Joe", age: 10 },
+        { member: "daughter", name: "Sally", age: 5 }
+    ]
+
+    const customTags = document.getElementsByTagName("list-renderer")
+    for (let i = 0; i < customTags.length; i++) {
+        const lr = new ListRenderer(customTags[i])
+        lr.render()
+    }
+</script>
+```
+
 ## Directives
 
 ### lr-loop

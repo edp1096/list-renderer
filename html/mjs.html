@@ -71,6 +71,14 @@
             <option value="{{value}}$index" lr-if="$index != myFoodIndex">{{name}}</option>
         </select>
     </div>
+
+    <list-renderer lr-loop="family">
+        <p lr-id="family$index">
+            <input type="checkbox" id="familysel$index" name="family$index" lr-change="alert('{{name}}/$index')" />
+            <span>{{name}} / {{age}}</span>
+            <button type="button" lr-click="showIndex($index)">Show index</button>
+        </p>
+    </list-renderer>
 </body>
 
 <script>"use strict";</script>
@@ -97,6 +105,14 @@
     window.lrPlanet = lrPlanet
     window.lrGalaxy = lrGalaxy
     window.lrFood = lrFood
+
+    const customTags = document.getElementsByTagName("list-renderer")
+    for (let i = 0; i < customTags.length; i++) {
+        const lr = new ListRenderer(customTags[i])
+        lr.render()
+    }
+
+    window.customTags = customTags
 </script>
 <script>
     async function addHumanData() {
@@ -151,6 +167,13 @@
         { name: "Pizza", value: "pizza" },
         { name: "Hamburger", value: "hamburger" },
         { name: "Steak", value: "steak" },
+    ]
+
+    const family = [
+        { member: "father", name: "John", age: 30 },
+        { member: "mother", name: "Jane", age: 20 },
+        { member: "son", name: "Joe", age: 10 },
+        { member: "daughter", name: "Sally", age: 5 }
     ]
 
     const myFoodIndex = 1
