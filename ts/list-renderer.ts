@@ -22,10 +22,11 @@ class ListRenderer {
 
     evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
 
-    parseTemplate(el: Element, dataName: string, loopName: string, idx: string): Element | null {
+    parseTemplate(el: Element, dataName: string, loopName: string, loopData: LoopDataType, idx: string): Element | null {
         if (typeof el != "object") { return null }
 
-        const data = this.loopDatas[loopName][idx]
+        // const data = this.loopDatas[loopName][idx]
+        const data = loopData
 
         let result = ""
         let condIF = el.getAttribute("lr-if")
@@ -81,7 +82,7 @@ class ListRenderer {
 
         if (el.children != undefined && el.children.length > 0) {
             for (let i in el.children) {
-                const child = this.parseTemplate(el.children[i], dataName, loopName, idx)
+                const child = this.parseTemplate(el.children[i], dataName, loopName, data, idx)
                 if (child) {
                     switch (true) {
                         case this.singleTags.includes(child.tagName.toLowerCase()):
@@ -100,9 +101,12 @@ class ListRenderer {
         } else {
             if (el.innerHTML != "" || this.singleTags.includes(el.tagName.toLowerCase())) {
                 const attrs = el.getAttributeNames()
-                for (let i in attrs) {
-                    let attrValue = el.getAttribute(attrs[i])
+                for (let k in attrs) {
+                    let attrValue = el.getAttribute(attrs[k])
                     if (attrValue == null) { continue }
+
+                    // console.log("attr::", k, attrValue, el.tagName.toLowerCase())
+
                     attrValue = attrValue.replace("$index", idx)
                     attrValue = attrValue.replace(this.regexForVariables, (_: string, val: string) => {
                         let value = this.evaluateString(`${dataName}["${val}"]`)
@@ -110,7 +114,7 @@ class ListRenderer {
                         return value
                     })
 
-                    el.setAttribute(attrs[i], attrValue.replace("$index", idx))
+                    el.setAttribute(attrs[k], attrValue.replace("$index", idx))
                 }
 
                 if (!this.singleTags.includes(el.tagName.toLowerCase())) {
@@ -130,8 +134,6 @@ class ListRenderer {
         return el
     }
 
-
-
     renderLoop(el: Element): void {
         if ((el.nodeType != undefined) && (el.tagName.toLowerCase() != "script")) {
             const loopName: string | null = el.getAttribute("lr-loop")
@@ -148,7 +150,7 @@ class ListRenderer {
                 for (let j in loopData) {
                     el.innerHTML = this.baseTemplate
 
-                    const child = this.parseTemplate(el, `${loopName}[${j}]`, loopName, j)
+                    const child = this.parseTemplate(el, `${loopName}[${j}]`, loopName, loopData, j)
                     if (child == null) { continue }
                     result.push(child.innerHTML)
                 }
