@@ -113,7 +113,8 @@ $ yarn all
 
 ### lr-loop
 * `lr-loop` should be placed only 1 depth under container
-* This attribute name in rendered result is removed when done to render or reload
+    * Or should be placed in `list-renderer` when using `list-renderer` custom tag
+* This attribute name is removed from rendered result when done to render or reload
 * Value of `lr-loop` means data variable name which is `const human` at below case
 * `undefined` values are changed to empty string value("")
 ```html

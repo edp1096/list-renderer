@@ -4,6 +4,7 @@ class ListRenderer {
     root: HTMLElement
     template: string
     regexForVariables: RegExp
+    loopVariableName: string
     loopDatas: LoopDataType
     baseTemplate: string
     singleTags: string[]
@@ -13,6 +14,7 @@ class ListRenderer {
         this.template = ""
         this.regexForVariables = /{{(.*?)}}/g
         this.loopDatas = {}
+        this.loopVariableName = ""
 
         this.baseTemplate = ""
         this.singleTags = ["input", "img", "br", "hr", "link", "meta", "base", "area", "col", "embed", "keygen", "param", "source", "track", "wbr", "command"]
@@ -139,6 +141,7 @@ class ListRenderer {
             this.loopDatas[loopName] = loopData
 
             this.baseTemplate = el.innerHTML
+
             let result: string[] = new Array()
 
             if (loopName != undefined) {
@@ -151,6 +154,8 @@ class ListRenderer {
                 }
 
                 el.innerHTML = result.join("").trim()
+
+                if (el.tagName.toLowerCase() == "list-renderer") { this.loopVariableName = loopName }
                 el.removeAttribute("lr-loop")
             }
         }
@@ -162,7 +167,7 @@ class ListRenderer {
         switch (this.root.tagName.toLowerCase()) {
             case "list-renderer":
                 this.renderLoop(this.root)
-                this.root.outerHTML = this.root.innerHTML
+                // this.root.outerHTML = this.root.innerHTML
                 break
             default:
                 const c = this.root.children
@@ -171,7 +176,10 @@ class ListRenderer {
         }
     }
 
-    restoreToTemplate(): void { this.root.innerHTML = this.template }
+    restoreToTemplate(): void {
+        if (this.root.tagName.toLowerCase() == "list-renderer") { this.root.setAttribute("lr-loop", this.loopVariableName) }
+        this.root.innerHTML = this.template
+    }
 
     reload(): void {
         this.restoreToTemplate()

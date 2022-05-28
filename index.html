@@ -16,6 +16,7 @@
 <body>
     <button type=button onclick="addHumanData()">Add human data</button>
     <button type=button onclick="addAnimalData()">Add animal data</button>
+    <button type=button onclick="addFamilyData()">Add family data</button>
 
     <div>Name / Age / Button to show index</div>
 
@@ -108,13 +109,14 @@
     window.lrGalaxy = lrGalaxy
     window.lrFood = lrFood
 
+    const lrs = new Array()
     const customTags = document.getElementsByTagName("list-renderer")
     for (let i = 0; i < customTags.length; i++) {
-        const lr = new ListRenderer(customTags[i])
-        lr.render()
+        lrs.push(new ListRenderer(customTags[i]))
+        lrs[lrs.length - 1].render()
     }
 
-    window.customTags = customTags
+    window.lrs = lrs
 </script> -->
 <script>
     async function addHumanData() {
@@ -131,6 +133,12 @@
         animal.push({ name: "Whale", age: "8" })
 
         lrAnimal.reload()
+    }
+
+    async function addFamilyData() {
+        family.push({ name: "Mark", member: "cousin", age: "29" })
+
+        lrs[0].reload()
     }
 
     function showIndex(index) { alert(index) }
@@ -192,10 +200,11 @@
     const lrFood = new ListRenderer(document.getElementById("food-container"))
     lrFood.render()
 
+    const lrs = new Array()
     const customTags = document.getElementsByTagName("list-renderer")
     for (let i = 0; i < customTags.length; i++) {
-        const lr = new ListRenderer(customTags[i])
-        lr.render()
+        lrs.push(new ListRenderer(customTags[i]))
+        lrs[lrs.length - 1].render()
     }
 
     // document.addEventListener("DOMContentLoaded", () => {

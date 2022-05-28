@@ -101,6 +101,12 @@
         lrAnimal.reload()
     }
 
+    async function addFamilyData() {
+        family.push({ name: "Mark", member: "cousin", age: "29" })
+
+        lrs[0].reload()
+    }
+
     function showIndex(index) { alert(index) }
 
     const human = [
@@ -160,10 +166,11 @@
     const lrFood = new ListRenderer(document.getElementById("food-container"))
     lrFood.render()
 
+    const lrs = new Array()
     const customTags = document.getElementsByTagName("list-renderer")
     for (let i = 0; i < customTags.length; i++) {
-        const lr = new ListRenderer(customTags[i])
-        lr.render()
+        lrs.push(new ListRenderer(customTags[i]))
+        lrs[lrs.length - 1].render()
     }
 
     // document.addEventListener("DOMContentLoaded", () => {
