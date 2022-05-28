@@ -78,10 +78,6 @@ $ yarn all
     const lrHuman = new ListRenderer(document.getElementById("human-container"))
     lrHuman.render()
 
-    const lrAnimal = new ListRenderer(document.getElementById("animal-container"))
-    lrAnimal.render()
-
-    window.lrAnimal = lrAnimal
     window.lrHuman = lrHuman
 </script>
 ```
