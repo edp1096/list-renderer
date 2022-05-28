@@ -42,7 +42,7 @@ $ yarn all
 
 ## Load
 
-### Javascript
+### Borwser JS
 
 ```html
 <div id="human-container">
@@ -63,7 +63,7 @@ $ yarn all
 </script>
 ```
 
-### Typescript
+### ES6 Module
 
 ```html
 <div id="human-container">
