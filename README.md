@@ -2,7 +2,7 @@
 
 Very much limitful list renderer class for the purpose of my personal usage.
 
-The reason is why I don't want to set HTML tags into any kind of javascript functions or variables during my job.
+The reason is why I don't want to set HTML tags as string into any kind of javascript functions or variables during my job.
 
 If one of vue, react, angular is too huge or not fit, try [`knockout.js`](https://github.com/knockout/knockout) or [`mustache.js`](https://github.com/janl/mustache.js), not this. :)
 
