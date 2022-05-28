@@ -75,7 +75,7 @@
     <list-renderer lr-loop="family">
         <p lr-id="family$index">
             <input type="checkbox" id="familysel$index" name="family$index" lr-change="alert('{{name}}/$index')" />
-            <span>{{name}} / {{age}}</span>
+            <span>{{name}}/ {{member}} / {{age}}</span>
             <button type="button" lr-click="showIndex($index)">Show index</button>
         </p>
     </list-renderer>
@@ -138,7 +138,7 @@
         { name: "Hamburger", value: "hamburger" },
         { name: "Steak", value: "steak" },
     ]
-    
+
     const family = [
         { member: "father", name: "John", age: 30 },
         { member: "mother", name: "Jane", age: 20 },

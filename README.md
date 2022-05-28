@@ -90,7 +90,7 @@ $ yarn all
 * It is possible to use as below instead of double lid of `div`
 ```html
 <list-renderer lr-loop="family">
-    <p lr-id="family$index"><span>{{name}} / {{age}}</span></p>
+    <p lr-id="family$index"><span>{{name}} / {{member}} / {{age}}</span></p>
 </list-renderer>
 
 <script>
