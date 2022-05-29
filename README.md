@@ -16,6 +16,13 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
     * `lr-click` and `lr-change` as event
     * `lr-id` as not identifier which is just changed to `data-id`,
     * `$index` as index in the loop data
+* When text with single tag like `br` or `hr` inside outer tag, all of text should be wraped with closing tag like `span`, `div`
+```html
+<!-- Not ok -->
+<div>{{name}} / {{member}} <br /> / {{age}}</div>
+<!-- It's ok -->
+<div><span>{{name}} / {{member}}</span> <br /> <span>/ {{age}}</span></div>
+```
 
 ## Build
 
