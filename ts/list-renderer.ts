@@ -22,7 +22,7 @@ class ListRenderer {
 
     evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
 
-    parseTemplate(el: Element, dataName: string, loopName: string, loopData: LoopDataType, idx: string): Element | null {
+    parseTemplate(el: Element, dataName: string, loopData: LoopDataType, idx: string): Element | null {
         if (typeof el != "object") { return null }
 
         // const data = this.loopDatas[loopName][idx]
@@ -82,7 +82,7 @@ class ListRenderer {
 
         if (el.children != undefined && el.children.length > 0) {
             for (let i in el.children) {
-                const child = this.parseTemplate(el.children[i], dataName, loopName, data, idx)
+                const child = this.parseTemplate(el.children[i], dataName, data, idx)
                 if (child) {
                     switch (true) {
                         case this.singleTags.includes(child.tagName.toLowerCase()):
@@ -150,7 +150,7 @@ class ListRenderer {
                 for (let j in loopData) {
                     el.innerHTML = this.baseTemplate
 
-                    const child = this.parseTemplate(el, `${loopName}[${j}]`, loopName, loopData, j)
+                    const child = this.parseTemplate(el, `${loopName}[${j}]`, loopData[j], j)
                     if (child == null) { continue }
                     result.push(child.innerHTML)
                 }
