@@ -24,8 +24,10 @@
         <div lr-loop="human">
             <p lr-id="human$index">
                 <input type="checkbox" id="humansel$index" name="human$index" lr-change="alert('{{name}}/$index')" />
-                <span>{{name}} / {{age}}</span>
-                <button type="button" lr-click="showIndex($index)">Show index</button>
+                <label for="humansel$index">
+                    <span>{{name}} / {{age}}</span>
+                    <button type="button" lr-click="showIndex($index)">Show index</button>
+                </label>
             </p>
         </div>
     </div>
@@ -76,7 +78,9 @@
     <list-renderer lr-loop="family">
         <p lr-id="family$index">
             <input type="checkbox" id="familysel$index" name="family$index" lr-change="alert('{{name}}/$index')" />
-            <span>{{name}} / {{member}} / {{age}}</span>
+            <label for="familysel$index">
+                <span>{{name}} / {{member}} / {{age}}</span>
+            </label>
         </p>
     </list-renderer>
 </body>

@@ -25,7 +25,6 @@ class ListRenderer {
     parseTemplate(el: Element, dataName: string, loopData: LoopDataType, idx: string): Element | null {
         if (typeof el != "object") { return null }
 
-        // const data = this.loopDatas[loopName][idx]
         const data = loopData
 
         let result = ""
@@ -81,19 +80,45 @@ class ListRenderer {
         }
 
         if (el.children != undefined && el.children.length > 0) {
-            for (let i in el.children) {
-                const child = this.parseTemplate(el.children[i], dataName, data, idx)
-                if (child) {
-                    switch (true) {
-                        case this.singleTags.includes(child.tagName.toLowerCase()):
-                            result += child.outerHTML
-                            break
-                        case (child.innerHTML.trim() != ""):
-                            result += child.outerHTML
-                            break
-                        default:
-                            break
-                    }
+            for (let j in el.childNodes) {
+                switch (el.childNodes[j].nodeType) {
+                    case Node.TEXT_NODE:
+                        if (el.childNodes[j].textContent?.trim() != "") {
+                            let text = el.childNodes[j].textContent?.trim()
+
+                            if (text == undefined) { continue }
+                            text = text.replace("$index", idx)
+                            text = text.replace(this.regexForVariables, (_: string, val: string) => {
+                                let value = this.evaluateString(`${dataName}["${val}"]`)
+                                if (value == undefined) { value = "" }
+                                return value
+                            })
+
+                            result += text
+                            console.log("result", result)
+                        }
+
+                        break
+                    case Node.ELEMENT_NODE:
+                        const child = this.parseTemplate((el.childNodes[j] as Element), dataName, data, idx)
+                        if (child) {
+                            switch (true) {
+                                case this.singleTags.includes(child.tagName.toLowerCase()):
+                                    result += child.outerHTML
+
+                                    break
+                                case (child.innerHTML.trim() != ""):
+                                    result += child.outerHTML
+
+                                    break
+                                default:
+                                    break
+                            }
+                        }
+
+                        break
+                    default:
+                        break
                 }
             }
 
