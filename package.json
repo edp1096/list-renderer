@@ -1,7 +1,7 @@
 {
-  "name": "hello-esbuild",
-  "version": "1.0.0",
-  "license": "WTFPL",
+  "name": "list-renderer",
+  "version": "0.1.0",
+  "license": "Public Domain",
   "type": "module",
   "scripts": {
     "prestart": "tsc-watch",
