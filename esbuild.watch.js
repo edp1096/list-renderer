@@ -9,7 +9,7 @@ const clients = []
 const port = 8000
 
 const watchJS = {
-    entryPoints: ["ts/list-renderer.ts"],
+    entryPoints: ["src/list-renderer.ts"],
     bundle: true,
     outfile: `${serveDIR}/list-renderer.js`,
     banner: { js: ' (() => new EventSource("/esbuild").onmessage = () => location.reload())();' },
@@ -25,7 +25,7 @@ const watchJS = {
 }
 
 const watchMJS = {
-    entryPoints: ["ts/list-renderer.ts"],
+    entryPoints: ["src/list-renderer.ts"],
     bundle: true,
     outfile: `${serveDIR}/list-renderer.mjs`,
     banner: { js: ' (() => new EventSource("/esbuild").onmessage = () => location.reload())();' },

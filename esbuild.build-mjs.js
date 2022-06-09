@@ -1,7 +1,7 @@
 import { build } from 'esbuild'
 
 build({
-    entryPoints: ["ts/list-renderer.ts"],
+    entryPoints: ["src/list-renderer.ts"],
     bundle: true,
     outfile: "dist/list-renderer.mjs",
     minify: true,
