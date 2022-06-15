@@ -19,7 +19,7 @@ class ListRenderer {
 
         this.baseTemplate = ""
         this.singleTags = ["input", "img", "br", "hr", "link", "meta", "base", "area", "col", "embed", "keygen", "param", "source", "track", "wbr", "command"]
-        this.allowEmptyTags = ["td"]
+        this.allowEmptyTags = ["div", "span", "p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "table", "tr", "td", "th", "thead", "tbody", "tfoot", "caption", "colgroup", "dl", "dt", "dd", "figure", "figcaption", "fieldset", "legend", "label", "select", "option", "optgroup", "button", "textarea", "pre", "code", "blockquote", "q", "cite", "ins", "del", "abbr", "acronym", "address", "bdo", "bdi", "q", "ruby", "rt", "rp", "iframe", "map", "area", "audio", "video", "canvas", "noscript", "script", "style"]
     }
 
     evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
