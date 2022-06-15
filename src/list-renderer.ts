@@ -8,6 +8,7 @@ class ListRenderer {
     loopDatas: LoopDataType
     baseTemplate: string
     singleTags: string[]
+    allowEmptyTags: string[]
 
     constructor(root: HTMLElement) {
         this.root = root
@@ -18,6 +19,7 @@ class ListRenderer {
 
         this.baseTemplate = ""
         this.singleTags = ["input", "img", "br", "hr", "link", "meta", "base", "area", "col", "embed", "keygen", "param", "source", "track", "wbr", "command"]
+        this.allowEmptyTags = ["td"]
     }
 
     evaluateString(cmd: string): any { return new Function("'use strict'; return (" + cmd + ")")() }
@@ -41,11 +43,7 @@ class ListRenderer {
             }
 
             el.removeAttribute("lr-if")
-
-            if ((isShow != null) && (!isShow)) {
-                el.innerHTML = ""
-                return el
-            }
+            if ((isShow != null) && (!isShow)) { return null }
         }
 
         let condCLK = el.getAttribute("lr-click")
@@ -90,12 +88,12 @@ class ListRenderer {
                             text = text.replace("$index", idx)
                             text = text.replace(this.regexForVariables, (_: string, val: string) => {
                                 let value = this.evaluateString(`${dataName}["${val}"]`)
-                                if (value == undefined) { value = "" }
+                                if (value == undefined || value == null) { value = "" }
+
                                 return value
                             })
 
                             result += text
-                            console.log("result", result)
                         }
 
                         break
@@ -107,17 +105,23 @@ class ListRenderer {
                                     result += child.outerHTML
 
                                     break
+                                case this.allowEmptyTags.includes(child.tagName.toLowerCase()):
+                                    result += child.outerHTML
+
+                                    break
                                 case (child.innerHTML.trim() != ""):
                                     result += child.outerHTML
 
                                     break
                                 default:
+
                                     break
                             }
                         }
 
                         break
                     default:
+
                         break
                 }
             }
@@ -135,7 +139,8 @@ class ListRenderer {
                     attrValue = attrValue.replace("$index", idx)
                     attrValue = attrValue.replace(this.regexForVariables, (_: string, val: string) => {
                         let value = this.evaluateString(`${dataName}["${val}"]`)
-                        if (value == undefined) { value = "" }
+                        if (value == undefined || value == null) { value = "" }
+
                         return value
                     })
 
@@ -146,15 +151,14 @@ class ListRenderer {
                     el.innerHTML = el.innerHTML.replace(this.regexForVariables, (_: string, cmd: string) => {
                         let value = this.evaluateString(`${dataName}["${cmd}"]`)
                         if (value == undefined) { value = "" }
+
                         return value
                     })
                 }
             }
         }
 
-        if (result.length > 0) {
-            el.innerHTML = result
-        }
+        if (result.length > 0) { el.innerHTML = result }
 
         return el
     }

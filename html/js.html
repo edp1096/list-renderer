@@ -48,7 +48,7 @@
         </ul>
     </div>
 
-    <table id="galaxy-container">
+    <table id="galaxy-container" border=1>
         <thead>
             <tr>
                 <th>Name</th>
@@ -115,7 +115,7 @@
     const human = [
         { name: "John", age: 30 },
         { name: "Jane", age: 20 },
-        { name: "Joe" },
+        { name: "Joe"},
         { name: "Sam", age: 10 },
         { name: "Sally", age: 5 }
     ]
@@ -131,13 +131,13 @@
     const planet = [
         { name: "Mercury", distance: "0.39AU" },
         { name: "Venus", distance: "0.723AU" },
-        { name: "Earth", distance: "1.0AU" },
+        { name: "Earth", distance: null },
         { name: "Mars", distance: "1.524AU" },
     ]
 
     const galaxy = [
-        { name: "Milkyway", distance: "30kpc" },
-        { name: "Andromeda", distance: "67kpc" },
+        { name: "Milkyway", distance: null }, // 30kpc
+        { name: null, distance: "67kpc" }, // Andromeda
         { name: "Sombrero", distance: "15kpc" },
         { name: "Cigar", distance: "11.3kpc" },
     ]
