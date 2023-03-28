@@ -77,6 +77,25 @@ class ListRenderer {
             el.removeAttribute("lr-id")
         }
 
+        let dirCLASS = el.getAttribute("lr-class")
+        if (dirCLASS != undefined) {
+            dirCLASS = dirCLASS.replace("$index", idx)
+
+            let classATTR = el.getAttribute("class")
+            if (classATTR == null) { classATTR = "" }
+            dirCLASS = dirCLASS.replace(this.regexForVariables, (_: string, val: string) => {
+                let value = this.evaluateString(`${dataName}["${val}"]`)
+                if (value == undefined || value == null) { value = "" }
+
+                return value
+            })
+
+            if (dirCLASS == null) { dirCLASS = "" }
+
+            el.setAttribute("class", `${classATTR} ${dirCLASS}`)
+            el.removeAttribute("lr-class")
+        }
+
         if (el.children != undefined && el.children.length > 0) {
             for (let j in el.childNodes) {
                 switch (el.childNodes[j].nodeType) {
