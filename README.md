@@ -207,7 +207,7 @@ $ yarn all
 ```
 
 ### lr-id
-* Different with `id` attribute
+* Different from `id` attribute
 * Those attribute name(s) in rendered result are changed to `data-id` when done to render or reload
 * Should be placed only in template
 * Variable of loop object is not supported, just `$index` can be used
