@@ -14,7 +14,8 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 * Only 1 depth list renderer in container
 * Support only
     * `lr-click` and `lr-change` as event
-    * `lr-id` as not identifier which is just changed to `data-id`,
+    * `lr-id` as not identifier which is just changed to `data-id` attribute
+    * `lr-class` as class which will be added to `class` attribute
     * `$index` as index in the loop data
 
 ## CDN
