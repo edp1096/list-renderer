@@ -6,6 +6,5 @@ build({
     outfile: "dist/list-renderer.js",
     minify: true,
     target: "es6",
-    define: { "process.env.NODE_ENV": "production" },
-    // define: { "process.env.NODE_ENV": "developemnt" },    
+    define: { "process.env.NODE_ENV": "'production'" },
 })
