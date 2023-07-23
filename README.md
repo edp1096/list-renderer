@@ -25,27 +25,16 @@ See [`deployed page`](https://edp1096.github.io/list-renderer) and [index.html](
 
 ## Build
 
-* Require [esbuild](https://github.com/evanw/esbuild)
-
-* Module
-
 ```powershell
-$ yarn install
-$ yarn mjs
+$ yarn
+$ yarn build
 ```
 
-* Browser JS
+## Watch
 
 ```powershell
-$ yarn install
-$ yarn js
-```
-
-* Both
-
-```powershell
-$ yarn install
-$ yarn all
+$ yarn
+$ yarn watch
 ```
 
 ## Load

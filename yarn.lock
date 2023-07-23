@@ -23,6 +23,34 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
+"@chialab/esbuild-plugin-html@^0.17.3":
+  version "0.17.3"
+  resolved "https://registry.yarnpkg.com/@chialab/esbuild-plugin-html/-/esbuild-plugin-html-0.17.3.tgz#8f771277814b2c365b1619290ddbe56c9c6f94aa"
+  integrity sha512-Q9ztdU/wJ0em7LHA+CeB/xqmhIoI5Gk4Y+gCiGmxVrHaT6AkkfAjYVojlyAA91JlpvXmtDIhUaVcJyhtmcip7g==
+  dependencies:
+    "@chialab/esbuild-rna" "^0.17.8"
+    "@chialab/node-resolve" "^0.17.1"
+
+"@chialab/esbuild-rna@^0.17.8":
+  version "0.17.8"
+  resolved "https://registry.yarnpkg.com/@chialab/esbuild-rna/-/esbuild-rna-0.17.8.tgz#1fd65a5aeaccddc30d8badfc126c3f7feaa757d2"
+  integrity sha512-hovU4W5zlyMnbJjexdczpQ9mcUfFsJuv9FWUhzpXiQwPprlp5lul+frTed9s8AyVDTDq2yq3Gx2Ac411QsXYGA==
+  dependencies:
+    "@chialab/estransform" "^0.17.4"
+    "@chialab/node-resolve" "^0.17.1"
+
+"@chialab/estransform@^0.17.4":
+  version "0.17.4"
+  resolved "https://registry.yarnpkg.com/@chialab/estransform/-/estransform-0.17.4.tgz#9064563c716aa52780867390a2c9cd0c4af0343d"
+  integrity sha512-p4nf8ECdmanwbRK6A/X/VYtJfkBk5vgChPh0GiCyZAPt6/mKPbe0v3y9WjLHfFdkv1bzjJzP3pjTJ1SZ1E1U8Q==
+  dependencies:
+    "@parcel/source-map" "^2.0.0"
+
+"@chialab/node-resolve@^0.17.1":
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/@chialab/node-resolve/-/node-resolve-0.17.1.tgz#ef51948742901d58625cf0275d7b1eb094d4a1b9"
+  integrity sha512-YWaK0MKKeB0FILI6j7qiAlGoSC9MqJZDFXzlAgfOaMCbn8Feqh6njxv7mI3oVkdi7QwV6zPRaTN6hKig/NriMA==
+
 "@esbuild/android-arm64@0.18.16":
   version "0.18.16"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.18.16.tgz#34f562abc0015933aabd41b3d50d8d3359e30155"
@@ -133,6 +161,13 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.18.16.tgz#5be58d31d0120c68af8e38b702e6937ce764cd68"
   integrity sha512-sCIVrrtcWN5Ua7jYXNG1xD199IalrbfV2+0k/2Zf2OyV2FtnQnMgdzgpRAbi4AWlKJj1jkX+M+fEGPQj6BQB4w==
 
+"@parcel/source-map@^2.0.0":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@parcel/source-map/-/source-map-2.1.1.tgz#fb193b82dba6dd62cc7a76b326f57bb35000a782"
+  integrity sha512-Ejx1P/mj+kMjQb8/y5XxDUn4reGdr+WyKYloBljpppUy8gs42T+BNoEOuRYqDVdgPc6NxduzIDoJS9pOFfV5Ew==
+  dependencies:
+    detect-libc "^1.0.3"
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -195,6 +230,11 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+detect-libc@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
+  integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
 
 diff@^4.0.1:
   version "4.0.2"

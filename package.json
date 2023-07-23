@@ -8,6 +8,7 @@
     "watch": "node esbuild.watch.js"
   },
   "devDependencies": {
+    "@chialab/esbuild-plugin-html": "^0.17.3",
     "esbuild": "^0.18.16",
     "fs": "^0.0.2",
     "tslint": "^6.1.3"
