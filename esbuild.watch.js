@@ -7,8 +7,8 @@ import { spawn } from "child_process"
 
 const serveDIR = "serve"
 const clients = []
+const ipaddr = "127.0.0.1"
 const port = 8000
-
 
 const pluginRefresh = {
     name: 'refresh-plugin',
@@ -26,8 +26,7 @@ const ctxOptionHTML = {
     bundle: false,
     outfile: `${serveDIR}/index.html`,
     banner: { js: ' (() => new EventSource("/esbuild").onmessage = () => location.reload())();' },
-    minify: true,
-    define: { "process.env.NODE_ENV": "'developemnt'" },
+    minify: false,
     plugins: [htmlPlugin(), pluginRefresh]
 }
 
@@ -53,32 +52,24 @@ await ctx.watch()
 await ctx.serve({ servedir: `${serveDIR}/` }, {}).then(() => {
     createServer((req, res) => {
         const { url, method, headers } = req
-        if (req.url === '/esbuild') {
-            return clients.push(
-                res.writeHead(200, {
-                    'Content-Type': 'text/event-stream',
-                    'Cache-Control': 'no-cache',
-                    Connection: 'keep-alive',
-                })
-            )
-        }
+        const header = { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' }
+        if (req.url === '/esbuild') { return clients.push(res.writeHead(200, header)) }
         const path = ~url.split('/').pop().indexOf('.') ? url : `/index.html` //for PWA with router
-        req.pipe(
-            request({ hostname: '0.0.0.0', port: 8000, path, method, headers }, (prxRes) => {
-                res.writeHead(prxRes.statusCode, prxRes.headers)
-                prxRes.pipe(res, { end: true })
-            }),
-            { end: true }
-        )
+        const requests = { hostname: ipaddr, port: port, path, method, headers }
+        req.pipe(request(requests, (r) => { res.writeHead(r.statusCode, r.headers); r.pipe(res, { end: true }) }), { end: true })
     }).listen(port)
 }).then(() => {
-    console.log(`Running server on http://localhost:${port}`)
+    console.log(`Running server on http://${ipaddr}:${port}`)
 
     // Open browser
     setTimeout(() => {
-        const op = { darwin: ['open'], linux: ['xdg-open'], win32: ['cmd', '/c', 'start'] }
-        const ptf = process.platform
-        if (clients.length === 0) spawn(op[ptf][0], [...[op[ptf].slice(1)], `http://localhost:${port}`])
+        const shellCommands = { darwin: ['open'], linux: ['xdg-open'], win32: ['cmd', '/c', 'start'] }
+        const currentOS = process.platform
+
+        const cmd = shellCommands[currentOS][0]
+        const options = [...[shellCommands[currentOS].slice(1)], `http://localhost:${port}`]
+
+        if (clients.length === 0) { spawn(cmd, options) }
     }, 250)
 
     process.on('SIGINT', () => {

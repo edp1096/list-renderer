@@ -2,7 +2,7 @@ interface LoopDataType { [key: string]: LoopDataType }
 
 class ListRenderer {
     root: HTMLElement
-    template: string
+    template: string | null
     regexForVariables: RegExp
     loopVariableName: string
     loopDatas: LoopDataType
@@ -12,8 +12,8 @@ class ListRenderer {
 
     constructor(root: HTMLElement) {
         this.root = root
-        this.template = ""
-        this.regexForVariables = /{{(.*?)}}/g
+        this.template = null
+        this.regexForVariables = /{(.*?)}/g
         this.loopDatas = {}
         this.loopVariableName = ""
 
@@ -94,6 +94,11 @@ class ListRenderer {
 
             el.setAttribute("class", `${classATTR} ${dirCLASS}`)
             el.removeAttribute("lr-class")
+        }
+
+        const dataText = el.getAttribute("lr-text")
+        if (dataText != undefined) {
+            el.innerHTML = dataText
         }
 
         if (el.children != undefined && el.children.length > 0) {
@@ -212,12 +217,17 @@ class ListRenderer {
     }
 
     render(): void {
+        // Remove all children except first child
+        if (this.root.children[0].children.length > 1) {
+            const elsToRemove = Array.from(this.root.children[0].children).slice(1)
+            elsToRemove.forEach((el) => { this.root.children[0].removeChild(el) })
+        }
+
         this.template = this.root.innerHTML
 
         switch (this.root.tagName.toLowerCase()) {
             case "list-renderer":
                 this.renderLoop(this.root)
-                // this.root.outerHTML = this.root.innerHTML
                 break
             default:
                 const c = this.root.children
@@ -227,8 +237,13 @@ class ListRenderer {
     }
 
     restoreToTemplate(): void {
-        if (this.root.tagName.toLowerCase() == "list-renderer") { this.root.setAttribute("lr-loop", this.loopVariableName) }
-        this.root.innerHTML = this.template
+        if (this.root.tagName.toLowerCase() == "list-renderer") {
+            this.root.setAttribute("lr-loop", this.loopVariableName)
+        }
+
+        if (this.template != null) {
+            this.root.innerHTML = this.template
+        }
     }
 
     reload(): void {
